@@ -1,4 +1,7 @@
+'use strict';
+
 var hapi = require('hapi');
+var models = require('./models');
 
 var server = new hapi.Server();
 
