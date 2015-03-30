@@ -1,0 +1,22 @@
+{
+  "name": "Scotchery",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Duelist/Scotchery.git"
+  },
+  "author": "Ian Benedict",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Duelist/Scotchery/issues"
+  },
+  "homepage": "https://github.com/Duelist/Scotchery",
+  "dependencies": {
+    "hapi": "^8.4.0"
+  }
+}
