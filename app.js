@@ -7,12 +7,26 @@ server.connection({
   port: +process.env.PORT || 3000
 });
 
-server.route({
-  method: 'GET',
-  path: '/',
-  handler: function (request, reply) {
-    reply('Hello.');
-  }
+server.views({
+  engines: {
+    jade: require('jade')
+  },
+  path: __dirname + '/views'
 });
- 
+
+var routes = [
+  {
+    method: 'GET',
+    path: '/',
+    handler: home
+  }
+];
+
+// Routes
+
+function home(request, response) {
+  response.view('index');
+}
+
+server.route(routes);
 server.start(); 

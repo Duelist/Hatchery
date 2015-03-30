@@ -1,0 +1,18 @@
+{
+  "name": "Scotchery",
+  "version": "0.0.0",
+  "homepage": "https://github.com/Duelist/Scotchery",
+  "authors": [
+    "Ian Benedict <ianbenedict@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ]
+}

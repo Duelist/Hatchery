@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/Duelist/Scotchery",
   "dependencies": {
-    "hapi": "^8.4.0"
+    "gulp": "^3.8.11",
+    "hapi": "^8.4.0",
+    "jade": "^1.9.2"
   }
 }
