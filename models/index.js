@@ -17,7 +17,7 @@ var sequelize = new Sequelize(process.env.DATABASE_URL, {
 
 /* Models */
 
-var User = sequelize.define('user', {
+var Member = sequelize.define('member', {
   username: Sequelize.STRING,
   email: Sequelize.STRING
 });
@@ -51,43 +51,43 @@ var BlogPost = sequelize.define('blog_post', {
 
 /* Relations */
 
-Campaign.belongsTo(User, {
-  foreignKey: 'user_id',
+Campaign.belongsTo(Member, {
+  foreignKey: 'member_id'
 });
 
 Character.belongsTo(Campaign, {
-  foreignKey: 'campaign_id',
+  foreignKey: 'campaign_id'
 });
 
-Character.belongsTo(User, {
-  foreignKey: 'user_id',
+Character.belongsTo(Member, {
+  foreignKey: 'member_id'
 });
 
 Item.belongsTo(Character, {
-  foreignKey: 'character_id',
+  foreignKey: 'character_id'
 });
 
 Map_.belongsTo(Campaign, {
-  foreignKey: 'campaign_id',
+  foreignKey: 'campaign_id'
 });
 
 Blog.belongsTo(Campaign, {
-  foreignKey: 'campaign_id',
+  foreignKey: 'campaign_id'
 });
 
 BlogPost.belongsTo(Blog, {
-  foreignKey: 'blog_id',
+  foreignKey: 'blog_id'
 });
 
-BlogPost.belongsTo(User, {
-  foreignKey: 'user_id',
+BlogPost.belongsTo(Member, {
+  foreignKey: 'member_id'
 });
 
 
 /* Sync */
 
-User.sync({ force: true }).then(function () {
-  return User.create({
+Member.sync({ force: true }).then(function () {
+  return Member.create({
     username: 'Duelist',
     email: 'ianbenedict@gmail.com'
   });
