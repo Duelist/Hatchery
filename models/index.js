@@ -129,7 +129,7 @@ Member.create({
         body: 'This is a test blog post.',
         blog_id: blog.id
       });
-    }):
+    });
   });
 });
 
