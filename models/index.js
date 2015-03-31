@@ -51,24 +51,34 @@ var BlogPost = sequelize.define('blog_post', {
 
 /* Relations */
 
-Map_.belongsTo(Campaign, {
-  foreignKey: 'campaign_id'
+Campaign.belongsTo(User, {
+  foreignKey: 'user_id'
 });
+
 Character.belongsTo(Campaign, {
   foreignKey: 'campaign_id'
 });
+
 Character.belongsTo(User, {
   foreignKey: 'user_id'
 });
+
 Item.belongsTo(Character, {
   foreignKey: 'character_id'
 });
+
+Map_.belongsTo(Campaign, {
+  foreignKey: 'campaign_id'
+});
+
 Blog.belongsTo(Campaign, {
   foreignKey: 'campaign_id'
 });
+
 BlogPost.belongsTo(Blog, {
   foreignKey: 'blog_id'
 });
+
 BlogPost.belongsTo(User, {
   foreignKey: 'user_id'
 });
@@ -76,48 +86,57 @@ BlogPost.belongsTo(User, {
 
 /* Sync */
 
-User.sync({ force: true }).then(function () {
+var seed_user = User.sync({ force: true }).then(function () {
   return User.create({
     username: 'Duelist',
     email: 'ianbenedict@gmail.com'
   });
 });
 
-Campaign.sync({ force: true }).then(function () {
+var seed_campaign = Campaign.sync({ force: true }).then(function () {
   return Campaign.create({
     name: 'Test Campaign',
-    description: 'This is a test campaign.'
+    description: 'This is a test campaign.',
+    user_id: seed_user.id
   });
 });
 
-Character.sync({ force: true }).then(function () {
+var seed_character = Character.sync({ force: true }).then(function () {
   return Character.create({
     name: 'Test Character',
-    bio: 'I am a test.'
+    bio: 'I am a test.',
+    campaign_id: seed_campaign.id,
+    user_id: seed_user.id
   });
 });
 
 Item.sync({ force: true }).then(function () {
   return Item.create({
     name: 'Test Item',
-    description: 'I am a test item.'
+    description: 'I am a test item.',
+    character_id: seed_character.id
   });
 });
 
 Map_.sync({ force: true }).then(function () {
   return Map_.create({
-    name: 'Test Map'
+    name: 'Test Map',
+    campaign_id: seed_campaign.id
   });
 });
 
-Blog.sync({ force: true }).then(function () {
-  return Blog.create();
+var seed_blog = Blog.sync({ force: true }).then(function () {
+  return Blog.create({
+    campaign_id: seed_campaign.id
+  });
 });
 
 BlogPost.sync({ force: true }).then(function () {
   return BlogPost.create({
     title: 'Test Post',
     body: 'This is a test blog post.'
+    blog_id: seed_blog.id,
+    user_id: seed_user.id
   });
 });
 
