@@ -80,7 +80,6 @@ var BlogPost = sequelize.define('blog_post', {
 /* Relations */
 
 Campaign.belongsTo(Member);
-/*
 Character.belongsTo(Campaign);
 Character.belongsTo(Member);
 Item.belongsTo(Character);
@@ -88,56 +87,49 @@ Map_.belongsTo(Campaign);
 Blog.belongsTo(Campaign);
 BlogPost.belongsTo(Member);
 BlogPost.belongsTo(Blog);
-*/
+
 
 /* Sync */
 
 sequelize.sync({ force: true });
 
-/*
-Member.sync({ force: true }).then(function () {
-  return Member.create({
-    username: 'Duelist',
-    email: 'ianbenedict@gmail.com'
-  });
+
+/* Seed data */
+
+var seed_member = Member.create({
+  username: 'Duelist',
+  email: 'ianbenedict@gmail.com'
 });
 
-Campaign.sync({ force: true }).then(function () {
-  return Campaign.create({
-    name: 'Test Campaign',
-    description: 'This is a test campaign.'
-  });
+var seed_campaign = Campaign.create({
+  name: 'Test Campaign',
+  description: 'This is a test campaign.',
+  member_id: seed_member.id
 });
 
-Character.sync({ force: true }).then(function () {
-  return Character.create({
-    name: 'Test Character',
-    bio: 'I am a test.'
-  });
+var seed_character = Character.create({
+  name: 'Test Character',
+  bio: 'I am a test.',
+  campaign_id: seed_campaign.id,
+  member_id: seed_member.id
 });
 
-Item.sync({ force: true }).then(function () {
-  return Item.create({
-    name: 'Test Item',
-    description: 'I am a test item.'
-  });
+Item.create({
+  name: 'Test Item',
+  description: 'I am a test item.',
+  character_id: seed_character.id
 });
 
-Map_.sync({ force: true }).then(function () {
-  return Map_.create({
-    name: 'Test Map'
-  });
+Map_.create({
+  name: 'Test Map',
+  campaign_id: seed_campaign.id
 });
 
-Blog.sync({ force: true }).then(function () {
-  return Blog.create();
-});
+var seed_blog = Blog.create();
 
-BlogPost.sync({ force: true }).then(function () {
-  return BlogPost.create({
-    title: 'Test Post',
-    body: 'This is a test blog post.'
-  });
+BlogPost.create({
+  title: 'Test Post',
+  body: 'This is a test blog post.',
+  blog_id: seed_blog.id
 });
-*/
 
