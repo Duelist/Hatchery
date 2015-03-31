@@ -52,35 +52,43 @@ var BlogPost = sequelize.define('blog_post', {
 /* Relations */
 
 Campaign.belongsTo(User, {
-  foreignKey: 'user_id'
+  foreignKey: 'user_id',
+  allowNull: false
 });
 
 Character.belongsTo(Campaign, {
-  foreignKey: 'campaign_id'
+  foreignKey: 'campaign_id',
+  allowNull: false
 });
 
 Character.belongsTo(User, {
-  foreignKey: 'user_id'
+  foreignKey: 'user_id',
+  allowNull: false
 });
 
 Item.belongsTo(Character, {
-  foreignKey: 'character_id'
+  foreignKey: 'character_id',
+  allowNull: false
 });
 
 Map_.belongsTo(Campaign, {
-  foreignKey: 'campaign_id'
+  foreignKey: 'campaign_id',
+  allowNull: false
 });
 
 Blog.belongsTo(Campaign, {
-  foreignKey: 'campaign_id'
+  foreignKey: 'campaign_id',
+  allowNull: false
 });
 
 BlogPost.belongsTo(Blog, {
-  foreignKey: 'blog_id'
+  foreignKey: 'blog_id',
+  allowNull: false
 });
 
 BlogPost.belongsTo(User, {
-  foreignKey: 'user_id'
+  foreignKey: 'user_id',
+  allowNull: false
 });
 
 
@@ -134,7 +142,7 @@ var seed_blog = Blog.sync({ force: true }).then(function () {
 BlogPost.sync({ force: true }).then(function () {
   return BlogPost.create({
     title: 'Test Post',
-    body: 'This is a test blog post.'
+    body: 'This is a test blog post.',
     blog_id: seed_blog.id,
     user_id: seed_user.id
   });
