@@ -10,10 +10,21 @@ var sequelize = new Sequelize(process.env.DATABASE_URL, {
 });
 
 var Campaign = sequelize.define('campaign', {
-  name: Sequelize.STRING
+  name: Sequelize.STRING,
+  description: Sequelize.STRING
+}, {
+  createdAt: 'created_at',
+  updatedAt: 'updated_at'
 });
 
-Campaign.sync({ force: true }).then(function () {
+var Character = sequelize.define('character', {
+  name: Sequelize.STRING,
+  bio: Sequelize.STRING
+});
+
+Character.belongsTo(Campaign);
+
+sequelize.sync({ force: true }).then(function () {
   return Campaign.create({
     name: 'Test Campaign'
   });
