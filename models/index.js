@@ -24,8 +24,16 @@ var Character = sequelize.define('character', {
 
 Character.belongsTo(Campaign);
 
-sequelize.sync({ force: true }).then(function () {
+Campaign.sync({ force: true }).then(function () {
   return Campaign.create({
-    name: 'Test Campaign'
+    name: 'Test Campaign',
+    description: 'This is a test campaign.'
+  });
+});
+
+Character.sync({ force: true }).then(function () {
+  return Campaign.create({
+    name: 'Test Character',
+    bio: 'I am a test.'
   });
 });
