@@ -9,6 +9,7 @@ var sequelize = new Sequelize(process.env.DATABASE_URL, {
   },
   define: {
     freezeTableName: true,
+    underscored: true,
     createdAt: 'created_at',
     updatedAt: 'updated_at'
   },
@@ -20,7 +21,14 @@ var sequelize = new Sequelize(process.env.DATABASE_URL, {
 
 var Member = sequelize.define('member', {
   username: Sequelize.STRING,
-  email: Sequelize.STRING
+  email: {
+    type: Sequelize.STRING,
+    validate: {
+      isEmail: {
+        msg: 'Email address must be valid.'
+      }
+    }
+  }
 });
 
 var Campaign = sequelize.define('campaign', {
@@ -52,37 +60,14 @@ var BlogPost = sequelize.define('blog_post', {
 
 /* Relations */
 
-Campaign.belongsTo(Member, {
-  foreignKey: 'member_id'
-});
-
-Character.belongsTo(Campaign, {
-  foreignKey: 'campaign_id'
-});
-
-Character.belongsTo(Member, {
-  foreignKey: 'member_id'
-});
-
-Item.belongsTo(Character, {
-  foreignKey: 'character_id'
-});
-
-Map_.belongsTo(Campaign, {
-  foreignKey: 'campaign_id'
-});
-
-Blog.belongsTo(Campaign, {
-  foreignKey: 'campaign_id'
-});
-
-BlogPost.belongsTo(Blog, {
-  foreignKey: 'blog_id'
-});
-
-BlogPost.belongsTo(Member, {
-  foreignKey: 'member_id'
-});
+Campaign.belongsTo(Member);
+Character.belongsTo(Campaign);
+Character.belongsTo(Member);
+Item.belongsTo(Character);
+Map_.belongsTo(Campaign);
+Blog.belongsTo(Campaign);
+BlogPost.belongsTo(Member);
+BlogPost.belongsTo(Blog);
 
 
 /* Sync */
