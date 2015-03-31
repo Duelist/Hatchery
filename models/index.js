@@ -79,8 +79,8 @@ var BlogPost = sequelize.define('blog_post', {
 
 /* Relations */
 
-Campaign.belongsTo(Member);
 /*
+Campaign.belongsTo(Member);
 Character.belongsTo(Campaign);
 Character.belongsTo(Member);
 Item.belongsTo(Character);
