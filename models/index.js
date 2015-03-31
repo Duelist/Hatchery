@@ -17,7 +17,7 @@ var sequelize = new Sequelize(process.env.DATABASE_URL, {
 
 /* Models */
 
-var User = sequelize.define('User', {
+var User = sequelize.define('user', {
   username: Sequelize.STRING,
   email: Sequelize.STRING
 });
@@ -41,12 +41,10 @@ var Map_ = sequelize.define('map', {
   name: Sequelize.STRING
 });
 
-var Blog = sequelize.define('blog', {
-  name: Sequelize.STRING
-});
+var Blog = sequelize.define('blog');
 
 var BlogPost = sequelize.define('blog_post', {
-  name: Sequelize.STRING,
+  title: Sequelize.STRING,
   body: Sequelize.STRING
 });
 
@@ -64,7 +62,12 @@ BlogPost.belongsTo(User);
 
 /* Sync */
 
-User.sync({ force: true });
+User.sync({ force: true }).then(function () {
+  return User.create({
+    username: 'Duelist',
+    email: 'ianbenedict@gmail.com'
+  });
+});
 
 Campaign.sync({ force: true }).then(function () {
   return Campaign.create({
@@ -80,8 +83,27 @@ Character.sync({ force: true }).then(function () {
   });
 });
 
-Item.sync({ force: true });
-Map_.sync({ force: true });
-Blog.sync({ force: true });
-BlogPost.sync({ force: true });
+Item.sync({ force: true }).then(function () {
+  return Item.create({
+    name: 'Test Item',
+    description: 'I am a test item.'
+  });
+});
+
+Map_.sync({ force: true }).then(function () {
+  return Map_.create({
+    name: 'Test Map'
+  });
+});
+
+Blog.sync({ force: true }).then(function () {
+  return Blog.create();
+});
+
+BlogPost.sync({ force: true }).then(function () {
+  return BlogPost.create({
+    title: 'Test Post',
+    body: 'This is a test blog post.'
+  });
+});
 
