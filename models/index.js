@@ -20,9 +20,13 @@ var sequelize = new Sequelize(process.env.DATABASE_URL, {
 /* Models */
 
 var Member = sequelize.define('member', {
-  username: Sequelize.STRING,
+  username: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
   email: {
     type: Sequelize.STRING,
+    allowNull: false,
     validate: {
       isEmail: {
         msg: 'Email address must be valid.'
@@ -32,17 +36,26 @@ var Member = sequelize.define('member', {
 });
 
 var Campaign = sequelize.define('campaign', {
-  name: Sequelize.STRING,
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
   description: Sequelize.STRING
 });
 
 var Character = sequelize.define('character', {
-  name: Sequelize.STRING,
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
   bio: Sequelize.STRING
 });
 
 var Item = sequelize.define('item', {
-  name: Sequelize.STRING,
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
   description: Sequelize.STRING
 });
 
@@ -53,14 +66,21 @@ var Map_ = sequelize.define('map', {
 var Blog = sequelize.define('blog');
 
 var BlogPost = sequelize.define('blog_post', {
-  title: Sequelize.STRING,
-  body: Sequelize.STRING
+  title: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  body: {
+    type: Sequelize.STRING,
+    allowNull: false
+  }
 });
 
 
 /* Relations */
 
 Campaign.belongsTo(Member);
+/*
 Character.belongsTo(Campaign);
 Character.belongsTo(Member);
 Item.belongsTo(Character);
@@ -68,7 +88,7 @@ Map_.belongsTo(Campaign);
 Blog.belongsTo(Campaign);
 BlogPost.belongsTo(Member);
 BlogPost.belongsTo(Blog);
-
+*/
 
 /* Sync */
 
