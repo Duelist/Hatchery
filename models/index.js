@@ -11,7 +11,8 @@ var sequelize = new Sequelize(process.env.DATABASE_URL, {
     freezeTableName: true,
     createdAt: 'created_at',
     updatedAt: 'updated_at'
-  }
+  },
+  logging: true
 });
 
 
