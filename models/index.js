@@ -51,13 +51,27 @@ var BlogPost = sequelize.define('blog_post', {
 
 /* Relations */
 
-Map_.belongsTo(Campaign);
-Character.belongsTo(Campaign);
-Character.belongsTo(User);
-Item.belongsTo(Character);
-Blog.belongsTo(Campaign);
-BlogPost.belongsTo(Blog);
-BlogPost.belongsTo(User);
+Map_.belongsTo(Campaign, {
+  foreignKey: 'campaign_id'
+});
+Character.belongsTo(Campaign, {
+  foreignKey: 'campaign_id'
+});
+Character.belongsTo(User, {
+  foreignKey: 'user_id'
+});
+Item.belongsTo(Character, {
+  foreignKey: 'character_id'
+});
+Blog.belongsTo(Campaign, {
+  foreignKey: 'campaign_id'
+});
+BlogPost.belongsTo(Blog, {
+  foreignKey: 'blog_id'
+});
+BlogPost.belongsTo(User, {
+  foreignKey: 'user_id'
+});
 
 
 /* Sync */
