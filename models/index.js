@@ -18,7 +18,8 @@ var sequelize = new Sequelize(process.env.DATABASE_URL, {
 /* Models */
 
 var User = sequelize.define('User', {
-  name: Sequelize.STRING
+  username: Sequelize.STRING,
+  email: Sequelize.STRING
 });
 
 var Campaign = sequelize.define('campaign', {
@@ -63,6 +64,8 @@ BlogPost.belongsTo(User);
 
 /* Sync */
 
+User.sync({ force: true });
+
 Campaign.sync({ force: true }).then(function () {
   return Campaign.create({
     name: 'Test Campaign',
@@ -76,3 +79,9 @@ Character.sync({ force: true }).then(function () {
     bio: 'I am a test.'
   });
 });
+
+Item.sync({ force: true });
+Map_.sync({ force: true });
+Blog.sync({ force: true });
+BlogPost.sync({ force: true });
+
