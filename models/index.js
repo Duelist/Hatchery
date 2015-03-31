@@ -32,7 +32,7 @@ Campaign.sync({ force: true }).then(function () {
 });
 
 Character.sync({ force: true }).then(function () {
-  return Campaign.create({
+  return Character.create({
     name: 'Test Character',
     bio: 'I am a test.'
   });
