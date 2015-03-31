@@ -92,6 +92,7 @@ BlogPost.belongsTo(Blog);
 /* Sync */
 
 sequelize.sync({ force: true }).then(function () {
+
   /* Seed data */
 
   Member.create({
@@ -125,50 +126,11 @@ sequelize.sync({ force: true }).then(function () {
         BlogPost.create({
           title: 'Test Post',
           body: 'This is a test blog post.',
-          blog_id: blog.id
+          blog_id: blog.id,
+          member_id: member.id
         });
       });
     });
   });
 });
-
-
-/*
-var seed_member = Member.create({
-  username: 'Duelist',
-  email: 'ianbenedict@gmail.com'
-});
-
-var seed_campaign = Campaign.create({
-  name: 'Test Campaign',
-  description: 'This is a test campaign.',
-  member_id: seed_member.id
-});
-
-var seed_character = Character.create({
-  name: 'Test Character',
-  bio: 'I am a test.',
-  campaign_id: seed_campaign.id,
-  member_id: seed_member.id
-});
-
-Item.create({
-  name: 'Test Item',
-  description: 'I am a test item.',
-  character_id: seed_character.id
-});
-
-Map_.create({
-  name: 'Test Map',
-  campaign_id: seed_campaign.id
-});
-
-var seed_blog = Blog.create();
-
-BlogPost.create({
-  title: 'Test Post',
-  body: 'This is a test blog post.',
-  blog_id: seed_blog.id
-});
-*/
 
