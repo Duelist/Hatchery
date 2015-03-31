@@ -97,18 +97,18 @@ sequelize.sync({ force: true }).then(function () {
   Member.create({
     username: 'Duelist',
     email: 'ianbenedict@gmail.com'
-  }, function (member) {
+  }).then(function (member) {
     Campaign.create({
       name: 'Test Campaign',
       description: 'This is a test campaign.',
       member_id: member.id
-    }, function (campaign) {
+    }).then(function (campaign) {
       Character.create({
         name: 'Test Character',
         bio: 'I am a test.',
         campaign_id: campaign.id,
         member_id: member.id
-      }, function (character) {
+      }).then(function (character) {
         Item.create({
           name: 'Test Item',
           description: 'This is a test item.',
@@ -121,7 +121,7 @@ sequelize.sync({ force: true }).then(function () {
       });
       Blog.create({
         campaign_id: campaign.id
-      }, function (blog) {
+      }).then(function (blog) {
         BlogPost.create({
           title: 'Test Post',
           body: 'This is a test blog post.',
