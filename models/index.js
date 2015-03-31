@@ -19,7 +19,7 @@ var sequelize = new Sequelize(process.env.DATABASE_URL, {
 
 /* Models */
 
-var Member = sequelize.define('Member', {
+var Member = sequelize.define('member', {
   username: {
     type: Sequelize.STRING,
     allowNull: false
@@ -35,7 +35,7 @@ var Member = sequelize.define('Member', {
   }
 });
 
-var Campaign = sequelize.define('Campaign', {
+var Campaign = sequelize.define('campaign', {
   name: {
     type: Sequelize.STRING,
     allowNull: false
@@ -43,7 +43,7 @@ var Campaign = sequelize.define('Campaign', {
   description: Sequelize.STRING
 });
 
-var Character = sequelize.define('Character', {
+var Character = sequelize.define('character', {
   name: {
     type: Sequelize.STRING,
     allowNull: false
@@ -51,7 +51,7 @@ var Character = sequelize.define('Character', {
   bio: Sequelize.STRING
 });
 
-var Item = sequelize.define('Item', {
+var Item = sequelize.define('item', {
   name: {
     type: Sequelize.STRING,
     allowNull: false
@@ -59,13 +59,13 @@ var Item = sequelize.define('Item', {
   description: Sequelize.STRING
 });
 
-var Map_ = sequelize.define('Map', {
+var Map_ = sequelize.define('map', {
   name: Sequelize.STRING
 });
 
-var Blog = sequelize.define('Blog');
+var Blog = sequelize.define('blog');
 
-var BlogPost = sequelize.define('BlogPost', {
+var BlogPost = sequelize.define('blog_post', {
   title: {
     type: Sequelize.STRING,
     allowNull: false
@@ -80,8 +80,8 @@ var BlogPost = sequelize.define('BlogPost', {
 /* Relations */
 
 Campaign.belongsTo(Member);
-Character.belongsTo(Campaign);
 /*
+Character.belongsTo(Campaign);
 Character.belongsTo(Member);
 Item.belongsTo(Character);
 Map_.belongsTo(Campaign);
@@ -92,6 +92,9 @@ BlogPost.belongsTo(Blog);
 
 /* Sync */
 
+sequelize.sync({ force: true });
+
+/*
 Member.sync({ force: true }).then(function () {
   return Member.create({
     username: 'Duelist',
@@ -136,4 +139,5 @@ BlogPost.sync({ force: true }).then(function () {
     body: 'This is a test blog post.'
   });
 });
+*/
 
