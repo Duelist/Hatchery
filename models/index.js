@@ -91,47 +91,47 @@ BlogPost.belongsTo(Blog);
 
 /* Sync */
 
-sequelize.sync({ force: true });
+sequelize.sync({ force: true }).then(function () {
+  /* Seed data */
 
-
-/* Seed data */
-
-Member.create({
-  username: 'Duelist',
-  email: 'ianbenedict@gmail.com'
-}, function (member) {
-  Campaign.create({
-    name: 'Test Campaign',
-    description: 'This is a test campaign.',
-    member_id: member.id
-  }, function (campaign) {
-    Character.create({
-      name: 'Test Character',
-      bio: 'I am a test.',
-      campaign_id: campaign.id,
+  Member.create({
+    username: 'Duelist',
+    email: 'ianbenedict@gmail.com'
+  }, function (member) {
+    Campaign.create({
+      name: 'Test Campaign',
+      description: 'This is a test campaign.',
       member_id: member.id
-    }, function (character) {
-      Item.create({
-        name: 'Test Item',
-        description: 'This is a test item.',
-        character_id: character.id
+    }, function (campaign) {
+      Character.create({
+        name: 'Test Character',
+        bio: 'I am a test.',
+        campaign_id: campaign.id,
+        member_id: member.id
+      }, function (character) {
+        Item.create({
+          name: 'Test Item',
+          description: 'This is a test item.',
+          character_id: character.id
+        });
       });
-    });
-    Map_.create({
-      name: 'Test Map',
-      campaign_id: campaign.id
-    });
-    Blog.create({
-      campaign_id: campaign.id
-    }, function (blog) {
-      BlogPost.create({
-        title: 'Test Post',
-        body: 'This is a test blog post.',
-        blog_id: blog.id
+      Map_.create({
+        name: 'Test Map',
+        campaign_id: campaign.id
+      });
+      Blog.create({
+        campaign_id: campaign.id
+      }, function (blog) {
+        BlogPost.create({
+          title: 'Test Post',
+          body: 'This is a test blog post.',
+          blog_id: blog.id
+        });
       });
     });
   });
 });
+
 
 /*
 var seed_member = Member.create({
