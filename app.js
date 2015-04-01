@@ -99,22 +99,6 @@ function logout(request, response) {
 /* Server start */
 
 server.register(cookie_auth, function (err) {
-  /*
-  server.auth.strategy('simple', 'basic', {
-    validateFunc: function (username, password, callback) {
-      models.member.findOne({
-        where: {
-          username: username
-        }
-      }).then(function (member) {
-        bcrypt.compare(password, member.password, function (err, is_valid) {
-          callback(err, is_valid, { member: member });
-        });
-      });
-    }
-  });
-  */
-
   server.auth.strategy('session', 'cookie', {
     password: 'secret',
     cookie: 'scotchery-sid',
