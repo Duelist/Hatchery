@@ -45,10 +45,11 @@ server.register(basic_auth, function (err) {
         }
       });
 
-      console.log(user);
+      console.log(user.username);
+      console.log(user.id);
 
       bcrypt.compare(password, user.password, function (err, is_valid) {
-        callback(err, is_valid, { user: user });
+        callback(err, is_valid, { username: user.username });
       });
     }
   });
