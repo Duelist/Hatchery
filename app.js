@@ -39,17 +39,17 @@ function home(request, response) {
 server.register(basic_auth, function (err) {
   server.auth.strategy('simple', 'basic', {
     validateFunc: function (username, password, callback) {
-      var user = models.member.findOne({
+      models.member.findOne({
         where: {
           username: username
         }
-      });
+      }).then(function (user) {
+        console.log(user.username);
+        console.log(user.id);
 
-      console.log(user.username);
-      console.log(user.id);
-
-      bcrypt.compare(password, user.password, function (err, is_valid) {
-        callback(err, is_valid, { username: user.username });
+        bcrypt.compare(password, user.password, function (err, is_valid) {
+          callback(err, is_valid, { username: user.username });
+        });
       });
     }
   });
