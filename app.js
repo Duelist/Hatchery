@@ -78,9 +78,7 @@ function login(request, response) {
     }
   }
 
-  if (request.method === 'get') {
-     response.view('login');
-  }
+  response.view('login');
 }
 
 function logout(request, response) {
