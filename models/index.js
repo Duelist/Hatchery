@@ -12,8 +12,7 @@ var sequelize = new Sequelize(process.env.DATABASE_URL, {
     underscored: true,
     createdAt: 'created_at',
     updatedAt: 'updated_at'
-  },
-  logging: true
+  }
 });
 
 
@@ -21,6 +20,10 @@ var sequelize = new Sequelize(process.env.DATABASE_URL, {
 
 var Member = sequelize.define('member', {
   username: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  password: {
     type: Sequelize.STRING,
     allowNull: false
   },
@@ -97,6 +100,7 @@ sequelize.sync({ force: true }).then(function () {
 
   Member.create({
     username: 'Duelist',
+    password: '$2a$10$p9yFI0kQNAT3GyTb4PPlku6Oko0n2n8rFbb2LTx16Syn54KyX4ofi',
     email: 'ianbenedict@gmail.com'
   }).then(function (member) {
     Campaign.create({

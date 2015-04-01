@@ -20,8 +20,10 @@
   },
   "homepage": "https://github.com/Duelist/Scotchery",
   "dependencies": {
+    "bcrypt": "^0.8.2",
     "gulp": "^3.8.11",
     "hapi": "^8.4.0",
+    "hapi-auth-basic": "^2.0.0",
     "jade": "^1.9.2",
     "pg": "^4.3.0",
     "pg-hstore": "^2.3.1",
