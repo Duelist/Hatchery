@@ -78,7 +78,7 @@ function login(request, response) {
     }
   }
 
-  response.view('login');
+  response.view('login', { message: message });
 }
 
 function logout(request, response) {
