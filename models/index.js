@@ -5,8 +5,21 @@ var path      = require("path");
 var Sequelize = require("sequelize");
 var basename  = path.basename(module.filename);
 var env       = process.env.NODE_ENV || "production";
-var config    = require(__dirname + '/../config/config.json')[env];
-var sequelize = new Sequelize(process.env.DATABASE_URL, config);
+var sequelize = new Sequelize(process.env.DATABASE_URL, {
+  dialect: 'postgres',
+  protocol: 'postgres',
+  port: 5432,
+  logging: false,
+  dialectOptions: {
+    ssl: true
+  },
+  define: {
+    freezeTableName: true,
+    underscored: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at'
+  }
+});
 var db        = {};
 
 fs
