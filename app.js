@@ -82,6 +82,7 @@ server.register(basic_auth, function (err) {
             campaign_id: campaign.id
           });
           models.Blog.create({
+            name: 'Test Campaign Blog',
             campaign_id: campaign.id
           }).then(function (blog) {
             models.BlogPost.create({
