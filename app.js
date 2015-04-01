@@ -63,7 +63,7 @@ function login(request, response) {
     } else {
       models.member.findOne({
         where: {
-          username: username
+          username: request.payload.username
         }
       }).then(function (member) {
         if (member) {
