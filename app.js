@@ -45,6 +45,8 @@ server.register(basic_auth, function (err) {
         }
       });
 
+      console.log(user);
+
       bcrypt.compare(password, user.password, function (err, is_valid) {
         callback(err, is_valid, { user: user });
       });
