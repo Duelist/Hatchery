@@ -1,14 +1,14 @@
 "use strict";
 module.exports = function(sequelize, DataTypes) {
-  var Map_ = sequelize.define("map", {
+  var CampaignMap = sequelize.define("campaign_map", {
     name: DataTypes.STRING
   }, {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        Map_.belongsTo(models.Campaign);
+        CampaignMap.belongsTo(models.Campaign);
       }
     }
   });
-  return Map_;
+  return CampaignMap;
 };

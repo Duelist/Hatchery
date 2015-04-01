@@ -77,7 +77,7 @@ server.register(basic_auth, function (err) {
               character_id: character.id
             });
           });
-          models.Map.create({
+          models.CampaignMap.create({
             name: 'Test Map',
             campaign_id: campaign.id
           });
