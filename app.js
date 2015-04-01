@@ -58,9 +58,9 @@ function login(request, response) {
   }
 
   if (request.method === 'post') {
-    console.log(request.payload);
     if (!request.payload.username || !request.payload.password) {
       message = 'Missing username or password.';
+      response.view('login', { message: message });
     } else {
       models.member.findOne({
         where: {
@@ -68,19 +68,23 @@ function login(request, response) {
         }
       }).then(function (member) {
         if (member) {
-          console.log(member);
           bcrypt.compare(request.payload.password, member.password, function (err, is_valid) {
-            request.auth.session.set(member);
-            return response.redirect('/');
+            if (is_valid) {
+              request.auth.session.set(member);
+              return response.redirect('/');
+            }
           })
         } else {
           message = 'Invalid username or password.';
+          response.view('login', { message: message });
         }
       });
     }
   }
 
-  response.view('login', { message: message });
+  if (request.method === 'get') {
+    response.view('login', { message: message });
+  }
 }
 
 function logout(request, response) {
