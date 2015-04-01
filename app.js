@@ -39,7 +39,7 @@ function home(request, response) {
 server.register(basic_auth, function (err) {
   server.auth.strategy('simple', 'basic', {
     validateFunc: function (user_id, password, callback) {
-      var user = models.Member.findOne({
+      var user = models.member.findOne({
         where: {
           id: user_id
         }
