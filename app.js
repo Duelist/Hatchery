@@ -72,6 +72,9 @@ function login(request, response) {
             if (is_valid) {
               request.auth.session.set(member);
               return response.redirect('/');
+            } else {
+              message = 'Invalid username or password.';
+              response.view('login', { message: message });
             }
           })
         } else {
@@ -114,7 +117,7 @@ server.register(cookie_auth, function (err) {
 
   server.auth.strategy('session', 'cookie', {
     password: 'secret',
-    cookie: 'sid',
+    cookie: 'scotchery-sid',
     redirectTo: '/login',
     isSecure: false 
   });
