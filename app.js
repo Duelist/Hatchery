@@ -55,37 +55,37 @@ server.register(basic_auth, function (err) {
   models.sequelize.sync({ force: true }).then(function () {
       /* Seed data */
 
-      models.Member.create({
+      models.member.create({
         username: 'Duelist',
         password: '$2a$10$p9yFI0kQNAT3GyTb4PPlku6Oko0n2n8rFbb2LTx16Syn54KyX4ofi',
         email: 'ianbenedict@gmail.com'
       }).then(function (member) {
-        models.Campaign.create({
+        models.campaign.create({
           name: 'Test Campaign',
           description: 'This is a test campaign.',
           member_id: member.id
         }).then(function (campaign) {
-          models.Character.create({
+          models.character.create({
             name: 'Test Character',
             bio: 'I am a test.',
             campaign_id: campaign.id,
             member_id: member.id
           }).then(function (character) {
-            models.Item.create({
+            models.item.create({
               name: 'Test Item',
               description: 'This is a test item.',
               character_id: character.id
             });
           });
-          models.CampaignMap.create({
+          models.campaign_map.create({
             name: 'Test Map',
             campaign_id: campaign.id
           });
-          models.Blog.create({
+          models.blog.create({
             name: 'Test Campaign Blog',
             campaign_id: campaign.id
           }).then(function (blog) {
-            models.BlogPost.create({
+            models.blog_post.create({
               title: 'Test Post',
               body: 'This is a test blog post.',
               blog_id: blog.id,
