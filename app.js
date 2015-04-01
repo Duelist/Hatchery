@@ -2,7 +2,7 @@
 
 var bcrypt = require('bcrypt');
 var hapi = require('hapi');
-var basic_auth = require('hapi-auth-basic');
+var cookie_auth = require('hapi-auth-cookie');
 var models = require('./models');
 
 var server = new hapi.Server();
@@ -19,37 +19,102 @@ server.views({
   path: __dirname + '/views'
 });
 
+
+/* Routes */
+
 var routes = [
   {
     method: 'GET',
     path: '/',
-    handler: home,
+    handler: home
+  },
+  {
+    method: ['GET', 'POST'],
+    path: '/login',
+    handler: login,
     config: {
-      auth: 'simple'
+      auth: {
+        mode: 'try',
+        strategy: 'session'
+      },
+      plugins: {
+        'hapi-auth-cookie': {
+          redirectTo: false
+        }
+      }
     }
   }
 ];
 
-// Routes
-
 function home(request, response) {
-  response.view('index', { user: request.auth.credentials.user });
+  response.view('index');
 }
 
-server.register(basic_auth, function (err) {
+function login(request, response) {
+  var message = '';
+
+  if (request.auth.isAuthenticated) {
+    return response.redirect('/');
+  }
+
+  if (request.method === 'post') {
+    if (!request.payload.username || !request.payload.password) {
+      message = 'Missing username or password.';
+    } else {
+      models.member.findOne({
+        where: {
+          username: username
+        }
+      }).then(function (member) {
+        if (member) {
+          bcrypt.compare(request.payload.password, member.password, function (err, is_valid) {
+            request.auth.session.set(member);
+            return response.redirect('/');
+          })
+        } else {
+          message = 'Invalid username or password.';
+        }
+      });
+    }
+  }
+
+  if (request.method === 'get') {
+     response.view('login');
+  }
+}
+
+function logout(request, response) {
+  request.auth.session.clear();
+  return response.redirect('/');
+}
+
+
+/* Server start */
+
+server.register(cookie_auth, function (err) {
+  /*
   server.auth.strategy('simple', 'basic', {
     validateFunc: function (username, password, callback) {
       models.member.findOne({
         where: {
           username: username
         }
-      }).then(function (user) {
-        bcrypt.compare(password, user.password, function (err, is_valid) {
-          callback(err, is_valid, { user: user });
+      }).then(function (member) {
+        bcrypt.compare(password, member.password, function (err, is_valid) {
+          callback(err, is_valid, { member: member });
         });
       });
     }
   });
+  */
+
+  server.auth.strategy('session', 'cookie', {
+    password: 'secret',
+    cookie: 'sid',
+    redirectTo: '/login',
+    isSecure: false 
+  });
+
   server.route(routes);
 
   models.sequelize.sync({ force: true }).then(function () {
