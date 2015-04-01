@@ -58,6 +58,7 @@ function login(request, response) {
   }
 
   if (request.method === 'post') {
+    console.log(request.payload);
     if (!request.payload.username || !request.payload.password) {
       message = 'Missing username or password.';
     } else {
@@ -67,6 +68,7 @@ function login(request, response) {
         }
       }).then(function (member) {
         if (member) {
+          console.log(member);
           bcrypt.compare(request.payload.password, member.password, function (err, is_valid) {
             request.auth.session.set(member);
             return response.redirect('/');
