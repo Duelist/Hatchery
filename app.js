@@ -59,6 +59,7 @@ function home(request, response) {
 function login(request, response) {
   var message = '';
 
+  console.log(request.auth);
   if (request.auth.isAuthenticated) {
     return response.redirect('/');
   }
