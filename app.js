@@ -27,7 +27,9 @@ var routes = [
     method: 'GET',
     path: '/',
     handler: home,
-    auth: 'session'
+    config: {
+      auth: 'session'
+    }
   },
   {
     method: ['GET', 'POST'],
@@ -49,7 +51,9 @@ var routes = [
     method: 'GET',
     path: '/logout',
     handler: logout,
-    auth: 'session'
+    config: {
+      auth: 'session'
+    }
   }
 ];
 
