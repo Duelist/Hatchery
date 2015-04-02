@@ -58,14 +58,12 @@ var routes = [
 ];
 
 function home(request, response) {
-  console.log(request.auth);
   response.view('index', { member: request.auth.credentials });
 }
 
 function login(request, response) {
   var message = '';
 
-  console.log(request.auth);
   if (request.auth.isAuthenticated) {
     return response.redirect('/');
   }
