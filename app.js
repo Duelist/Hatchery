@@ -26,7 +26,8 @@ var routes = [
   {
     method: 'GET',
     path: '/',
-    handler: home
+    handler: home,
+    auth: 'session'
   },
   {
     method: ['GET', 'POST'],
@@ -47,7 +48,8 @@ var routes = [
   {
     method: 'GET',
     path: '/logout',
-    handler: logout
+    handler: logout,
+    auth: 'session'
   }
 ];
 
