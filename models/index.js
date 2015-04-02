@@ -20,7 +20,7 @@ var sequelize = new Sequelize(process.env.DATABASE_URL, {
     updatedAt: 'updated_at'
   }
 });
-var db        = {};
+var db = {};
 
 fs
   .readdirSync(__dirname)

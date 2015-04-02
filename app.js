@@ -43,6 +43,11 @@ var routes = [
         }
       }
     }
+  },
+  {
+    method: 'GET',
+    path: '/logout',
+    handler: logout
   }
 ];
 
