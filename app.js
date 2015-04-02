@@ -28,7 +28,10 @@ var routes = [
     path: '/',
     handler: home,
     config: {
-      auth: 'session',
+      auth: {
+        mode: 'try',
+        strategy: 'session'
+      },
       plugins: {
         'hapi-auth-cookie': {
           redirectTo: false
@@ -57,7 +60,10 @@ var routes = [
     path: '/logout',
     handler: logout,
     config: {
-      auth: 'session',
+      auth: {
+        mode: 'try',
+        strategy: 'session'
+      },
       plugins: {
         'hapi-auth-cookie': {
           redirectTo: false
