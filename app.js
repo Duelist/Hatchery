@@ -47,7 +47,7 @@ var routes = [
 ];
 
 function home(request, response) {
-  response.view('index');
+  response.view('index', { member: request.auth.credentials });
 }
 
 function login(request, response) {
