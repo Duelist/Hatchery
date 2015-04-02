@@ -52,6 +52,7 @@ var routes = [
 ];
 
 function home(request, response) {
+  console.log(request.auth.credentials);
   response.view('index', { member: request.auth.credentials });
 }
 
