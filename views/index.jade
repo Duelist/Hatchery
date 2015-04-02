@@ -1,7 +1,7 @@
 extend base
 
 block content
-  if #{ member }
+  if member
     span Welcome, #{ member.username }
   else
     span <a href="/login">Log In</a>
