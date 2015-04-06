@@ -139,10 +139,7 @@ function logout(request, response) {
 }
 
 function create_campaign(request, response) {
-  if (request.method === 'get') {
-    // Return campaign creation form
-    response.view('campaign', { member: request.auth.credentials });
-  } else if (request.method === 'post') {
+  if (request.method === 'post') {
     // Create campaign
     models.campaign.create({
       name: request.payload.name,
@@ -152,6 +149,8 @@ function create_campaign(request, response) {
       response.redirect('/');
     });
   }
+
+  response.view('campaign', { member: request.auth.credentials });
 }
 
 /* Server start */
