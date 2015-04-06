@@ -1,0 +1,7 @@
+extend base
+
+block content
+  span Create new campaign
+  div #{ message }
+  div
+    form(action='/campaign', method='post')

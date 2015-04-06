@@ -70,6 +70,22 @@ var routes = [
         }
       }
     }
+  },
+  {
+    method: ['GET', 'POST'],
+    path: '/campaign/new',
+    handler: create_campaign,
+    config: {
+      auth: {
+        mode: 'try',
+        strategy: 'session'
+      },
+      plugins: {
+        'hapi-auth-cookie': {
+          redirectTo: false
+        }
+      }
+    }
   }
 ];
 
@@ -122,6 +138,13 @@ function logout(request, response) {
   return response.redirect('/');
 }
 
+function create_campaign(request, response) {
+  if (request.method === 'get') {
+    // Return campaign creation form
+  } else if (request.method === 'post') {
+    // Create campaign
+  }
+}
 
 /* Server start */
 
