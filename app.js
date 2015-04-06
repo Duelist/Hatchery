@@ -141,8 +141,16 @@ function logout(request, response) {
 function create_campaign(request, response) {
   if (request.method === 'get') {
     // Return campaign creation form
+    response.view('campaign', { member: request.auth.credentials });
   } else if (request.method === 'post') {
     // Create campaign
+    models.campaign.create({
+      name: request.payload.name,
+      description: request.payload.description,
+      member_id: request.auth.credentials.id
+    }).then(function (campaign) {
+      response.redirect('/');
+    });
   }
 }
 
