@@ -3,7 +3,7 @@
 var bcrypt = require('bcrypt');
 var hapi = require('hapi');
 var cookie_auth = require('hapi-auth-cookie');
-var slug = requre('slug');
+var slug = require('slug');
 var models = require('./models');
 
 var server = new hapi.Server();
