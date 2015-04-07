@@ -1,0 +1,10 @@
+extend base
+
+block content
+  span Create new item
+  div #{ message }
+  div
+    form(action=form_action_url, method='post')
+      input(name='name', type='text')
+      input(name='description', type='textarea')
+      input(type='submit', value='Create')

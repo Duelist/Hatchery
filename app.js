@@ -101,6 +101,21 @@ var routes = [
         }
       }
     }
+  },
+  {
+    method: ['GET', 'POST'],
+    path: '/campaign/{campaign_slug}/character/{character_slug}/item',
+    handler: item,
+    config: {
+      auth: {
+        strategy: 'session'
+      },
+      plugins: {
+        'hapi-auth-cookie': {
+          redirectTo: '/'
+        }
+      }
+    }
   }
 ];
 
@@ -222,6 +237,64 @@ function character(request, response) {
         response.view('character', {
           member: request.auth.credentials,
           form_action_url: '/campaign/' + request.params.campaign_id + '/character'
+        });
+      } else {
+        response.redirect('/');
+      }
+    });
+  }
+}
+
+function item(request, response) {
+  if (request.method === 'post') {
+    if (request.payload.name) {
+      // Create item
+      models.campaign.findOne({
+        where: {
+          slug: request.params.campaign_slug
+        }
+      }).then(function (campaign) {
+        if (campaign) {
+          models.character.findOne({
+            where: {
+              slug: request.params.character_slug
+            }
+          }).then(function (character) {
+            if (character) {
+              models.item.create({
+                name: request.payload.name,
+                description: request.payload.description,
+                slug: slug(request.payload.name),
+                character_id: character.id
+              }).then(function (item) {
+                if (item) {
+                  response.redirect('/');
+                } else {
+                  response.view('item', {
+                    member: request.auth.credentials,
+                    message: 'Could not create a new item.'
+                  });
+                }
+              });
+            } else {
+              response.redirect('/');
+            }
+          });
+        } else {
+          response.redirect('/');
+        }
+      });
+    }
+  } else {
+    models.item.findOne({
+      where: {
+        slug: request.params.item_slug
+      }
+    }).then(function (item) {
+      if (item) {
+        response.view('item', {
+          member: request.auth.credentials,
+          form_action_url: '/campaign/' + request.params.campaign_id + '/character/' + request.params.character_id + '/item'
         });
       } else {
         response.redirect('/');
