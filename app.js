@@ -204,14 +204,25 @@ function character(request, response) {
               });
             }
           });
+        } else {
+          response.redirect('/');
         }
       });
-
     }
   } else {
-    response.view('character', {
-      member: request.auth.credentials,
-      form_action_url: '/campaign/' + request.params.campaign_id + '/character'
+    models.campaign.findOne({
+      where: {
+        id: request.params.campaign_id
+      }
+    }).then(function (campaign) {
+      if (campaign) {
+        response.view('character', {
+          member: request.auth.credentials,
+          form_action_url: '/campaign/' + request.params.campaign_id + '/character'
+        });
+      } else {
+        response.redirect('/');
+      }
     });
   }
 }
