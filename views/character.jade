@@ -4,7 +4,7 @@ block content
   span Create new character 
   div #{ message }
   div
-    form(action='/character', method='post')
+    form(action=form_action_url, method='post')
       input(name='name', type='text')
       input(name='bio', type='textarea')
       input(type='submit', value='Create')

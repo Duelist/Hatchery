@@ -172,7 +172,10 @@ function campaign(request, response) {
       });
     }
   } else {
-    response.view('campaign', { member: request.auth.credentials });
+    response.view('campaign', {
+      member: request.auth.credentials,
+      form_action_url: '/campaign'
+    });
   }
 }
 
@@ -197,7 +200,10 @@ function character(request, response) {
       });
     }
   } else {
-    response.view('character', { member: request.auth.credentials });
+    response.view('character', {
+      member: request.auth.credentials,
+      form_action_url: '/campaign/' + request.params.campaign_id + '/character'
+    });
   }
 }
 
