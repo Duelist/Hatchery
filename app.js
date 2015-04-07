@@ -146,11 +146,18 @@ function create_campaign(request, response) {
       description: request.payload.description,
       member_id: request.auth.credentials.id
     }).then(function (campaign) {
-      response.redirect('/');
+      if (campaign) {
+        response.redirect('/');
+      } else {
+        response.view('campaign', {
+          member: request.auth.credentials,
+          message: 'Could not create a new campaign.'
+        });
+      }
     });
+  } else {
+    response.view('campaign', { member: request.auth.credentials });
   }
-
-  response.view('campaign', { member: request.auth.credentials });
 }
 
 /* Server start */
