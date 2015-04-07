@@ -73,7 +73,7 @@ var routes = [
   },
   {
     method: ['GET', 'POST'],
-    path: '/campaign/new',
+    path: '/campaign',
     handler: create_campaign,
     config: {
       auth: {
@@ -140,21 +140,23 @@ function logout(request, response) {
 
 function create_campaign(request, response) {
   if (request.method === 'post') {
-    // Create campaign
-    models.campaign.create({
-      name: request.payload.name,
-      description: request.payload.description,
-      member_id: request.auth.credentials.id
-    }).then(function (campaign) {
-      if (campaign) {
-        response.redirect('/');
-      } else {
-        response.view('campaign', {
-          member: request.auth.credentials,
-          message: 'Could not create a new campaign.'
-        });
-      }
-    });
+    if (request.payload.name) {
+      // Create campaign
+      models.campaign.create({
+        name: request.payload.name,
+        description: request.payload.description,
+        member_id: request.auth.credentials.id
+      }).then(function (campaign) {
+        if (campaign) {
+          response.redirect('/');
+        } else {
+          response.view('campaign', {
+            member: request.auth.credentials,
+            message: 'Could not create a new campaign.'
+          });
+        }
+      });
+    }
   } else {
     response.view('campaign', { member: request.auth.credentials });
   }
