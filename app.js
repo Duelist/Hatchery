@@ -183,21 +183,30 @@ function character(request, response) {
   if (request.method === 'post') {
     if (request.payload.name) {
       // Create character
-      models.character.create({
-        name: request.payload.name,
-        bio: request.payload.bio,
-        member_id: request.auth.credentials.id,
-        campaign_id: request.params.campaign_id
+      models.campaign.findOne({
+        where: {
+          id: request.params.campaign_id
+        }
       }).then(function (campaign) {
-        if (character) {
-          response.redirect('/');
-        } else {
-          response.view('character', {
-            member: request.auth.credentials,
-            message: 'Could not create a new character.'
+        if (campaign) {
+          models.character.create({
+            name: request.payload.name,
+            bio: request.payload.bio,
+            member_id: request.auth.credentials.id,
+            campaign_id: request.params.campaign_id
+          }).then(function (character) {
+            if (character) {
+              response.redirect('/');
+            } else {
+              response.view('character', {
+                member: request.auth.credentials,
+                message: 'Could not create a new character.'
+              });
+            }
           });
         }
       });
+
     }
   } else {
     response.view('character', {
