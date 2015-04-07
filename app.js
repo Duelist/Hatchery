@@ -74,15 +74,29 @@ var routes = [
   {
     method: ['GET', 'POST'],
     path: '/campaign',
-    handler: create_campaign,
+    handler: campaign,
     config: {
       auth: {
-        mode: 'try',
         strategy: 'session'
       },
       plugins: {
         'hapi-auth-cookie': {
-          redirectTo: false
+          redirectTo: '/'
+        }
+      }
+    }
+  },
+  {
+    method: ['GET', 'POST'],
+    path: '/campaign/{campaign_id}/character',
+    handler: character,
+    config: {
+      auth: {
+        strategy: 'session'
+      },
+      plugins: {
+        'hapi-auth-cookie': {
+          redirectTo: '/'
         }
       }
     }
@@ -138,7 +152,7 @@ function logout(request, response) {
   return response.redirect('/');
 }
 
-function create_campaign(request, response) {
+function campaign(request, response) {
   if (request.method === 'post') {
     if (request.payload.name) {
       // Create campaign
@@ -159,6 +173,31 @@ function create_campaign(request, response) {
     }
   } else {
     response.view('campaign', { member: request.auth.credentials });
+  }
+}
+
+function character(request, response) {
+  if (request.method === 'post') {
+    if (request.payload.name) {
+      // Create character
+      models.character.create({
+        name: request.payload.name,
+        bio: request.payload.bio,
+        member_id: request.auth.credentials.id,
+        campaign_id: request.params.campaign_id
+      }).then(function (campaign) {
+        if (character) {
+          response.redirect('/');
+        } else {
+          response.view('character', {
+            member: request.auth.credentials,
+            message: 'Could not create a new character.'
+          });
+        }
+      });
+    }
+  } else {
+    response.view('character', { member: request.auth.credentials });
   }
 }
 
