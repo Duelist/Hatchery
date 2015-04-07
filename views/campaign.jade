@@ -4,7 +4,7 @@ block content
   span Create new campaign
   div #{ message }
   div
-    form(action='/campaign', method='post')
+    form(action='/campaign/new', method='post')
       input(name='name', type='text')
       input(name='description', type='textarea')
       input(type='submit', value='Create')
