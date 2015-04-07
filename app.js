@@ -160,7 +160,7 @@ function campaign(request, response) {
       models.campaign.create({
         name: request.payload.name,
         description: request.payload.description,
-        slug: slug(request.payload.name),
+        slug: slug(request.payload.name).toLowerCase(),
         member_id: request.auth.credentials.id
       }).then(function (campaign) {
         if (campaign) {
@@ -194,7 +194,7 @@ function character(request, response) {
           models.character.create({
             name: request.payload.name,
             bio: request.payload.bio,
-            slug: slug(request.payload.name),
+            slug: slug(request.payload.name).toLowerCase(),
             member_id: request.auth.credentials.id,
             campaign_id: request.params.campaign_id
           }).then(function (character) {
@@ -253,26 +253,26 @@ server.register(cookie_auth, function (err) {
         models.campaign.create({
           name: 'Test Campaign',
           description: 'This is a test campaign.',
-          slug: slug('Test Campaign'),
+          slug: slug('Test Campaign').toLowerCase(),
           member_id: member.id
         }).then(function (campaign) {
           models.character.create({
             name: 'Test Character',
             bio: 'I am a test.',
-            slug: slug('Test Character'),
+            slug: slug('Test Character').toLowerCase(),
             campaign_id: campaign.id,
             member_id: member.id
           }).then(function (character) {
             models.item.create({
               name: 'Test Item',
               description: 'This is a test item.',
-              slug: slug('Test Item'),
+              slug: slug('Test Item').toLowerCase(),
               character_id: character.id
             });
           });
           models.campaign_map.create({
             name: 'Test Map',
-            slug: slug('Test Map'),
+            slug: slug('Test Map').toLowerCase(),
             campaign_id: campaign.id
           });
           models.blog.create({
@@ -282,7 +282,7 @@ server.register(cookie_auth, function (err) {
             models.blog_post.create({
               title: 'Test Post',
               body: 'This is a test blog post.',
-              slug: slug('Test Post'),
+              slug: slug('Test Post').toLowerCase(),
               blog_id: blog.id,
               member_id: member.id
             });
