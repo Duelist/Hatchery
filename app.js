@@ -3,6 +3,7 @@
 var bcrypt = require('bcrypt');
 var hapi = require('hapi');
 var cookie_auth = require('hapi-auth-cookie');
+var slug = requre('slug');
 var models = require('./models');
 
 var server = new hapi.Server();
@@ -88,7 +89,7 @@ var routes = [
   },
   {
     method: ['GET', 'POST'],
-    path: '/campaign/{campaign_id}/character',
+    path: '/campaign/{campaign_slug}/character',
     handler: character,
     config: {
       auth: {
@@ -159,6 +160,7 @@ function campaign(request, response) {
       models.campaign.create({
         name: request.payload.name,
         description: request.payload.description,
+        slug: slug(request.payload.name),
         member_id: request.auth.credentials.id
       }).then(function (campaign) {
         if (campaign) {
@@ -185,13 +187,14 @@ function character(request, response) {
       // Create character
       models.campaign.findOne({
         where: {
-          id: request.params.campaign_id
+          slug: request.params.campaign_slug
         }
       }).then(function (campaign) {
         if (campaign) {
           models.character.create({
             name: request.payload.name,
             bio: request.payload.bio,
+            slug: slug(request.payload.name),
             member_id: request.auth.credentials.id,
             campaign_id: request.params.campaign_id
           }).then(function (character) {
@@ -212,7 +215,7 @@ function character(request, response) {
   } else {
     models.campaign.findOne({
       where: {
-        id: request.params.campaign_id
+        slug: request.params.campaign_slug
       }
     }).then(function (campaign) {
       if (campaign) {
@@ -250,22 +253,26 @@ server.register(cookie_auth, function (err) {
         models.campaign.create({
           name: 'Test Campaign',
           description: 'This is a test campaign.',
+          slug: slug('Test Campaign'),
           member_id: member.id
         }).then(function (campaign) {
           models.character.create({
             name: 'Test Character',
             bio: 'I am a test.',
+            slug: slug('Test Character'),
             campaign_id: campaign.id,
             member_id: member.id
           }).then(function (character) {
             models.item.create({
               name: 'Test Item',
               description: 'This is a test item.',
+              slug: slug('Test Item'),
               character_id: character.id
             });
           });
           models.campaign_map.create({
             name: 'Test Map',
+            slug: slug('Test Map'),
             campaign_id: campaign.id
           });
           models.blog.create({
@@ -275,6 +282,7 @@ server.register(cookie_auth, function (err) {
             models.blog_post.create({
               title: 'Test Post',
               body: 'This is a test blog post.',
+              slug: slug('Test Post'),
               blog_id: blog.id,
               member_id: member.id
             });

@@ -5,7 +5,8 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false
     },
-    bio: DataTypes.STRING
+    bio: DataTypes.STRING,
+    slug: DataTypes.STRING
   }, {
     classMethods: {
       associate: function(models) {

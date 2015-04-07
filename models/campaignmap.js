@@ -1,7 +1,8 @@
 "use strict";
 module.exports = function(sequelize, DataTypes) {
   var CampaignMap = sequelize.define("campaign_map", {
-    name: DataTypes.STRING
+    name: DataTypes.STRING,
+    slug: DataTypes.STRING
   }, {
     classMethods: {
       associate: function(models) {

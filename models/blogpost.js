@@ -8,7 +8,8 @@ module.exports = function(sequelize, DataTypes) {
     body: {
       type: DataTypes.STRING,
       allowNull: false
-    }
+    },
+    slug: DataTypes.STRING
   }, {
     classMethods: {
       associate: function(models) {
