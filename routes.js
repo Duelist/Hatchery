@@ -1,10 +1,10 @@
-var endpoints = require('./endpoints');
+var handlers = require('./handlers');
 
 module.exports = [
   {
     method: 'GET',
     path: '/',
-    handler: endpoints.home,
+    handler: handlers.home,
     config: {
       auth: {
         mode: 'try',
@@ -20,7 +20,7 @@ module.exports = [
   {
     method: ['GET', 'POST'],
     path: '/login',
-    handler: endpoints.login,
+    handler: handlers.login,
     config: {
       auth: {
         mode: 'try',
@@ -36,7 +36,7 @@ module.exports = [
   {
     method: 'GET',
     path: '/logout',
-    handler: endpoints.logout,
+    handler: handlers.logout,
     config: {
       auth: {
         mode: 'try',
@@ -52,7 +52,7 @@ module.exports = [
   {
     method: ['GET', 'POST'],
     path: '/campaign',
-    handler: endpoints.campaign,
+    handler: handlers.campaign,
     config: {
       auth: {
         strategy: 'session'
@@ -67,7 +67,7 @@ module.exports = [
   {
     method: ['GET', 'POST'],
     path: '/campaign/{campaign_slug}/character',
-    handler: endpoints.character,
+    handler: handlers.character,
     config: {
       auth: {
         strategy: 'session'
@@ -82,7 +82,7 @@ module.exports = [
   {
     method: ['GET', 'POST'],
     path: '/campaign/{campaign_slug}/item',
-    handler: endpoints.item,
+    handler: handlers.item,
     config: {
       auth: {
         strategy: 'session'
