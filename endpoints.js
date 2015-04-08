@@ -169,7 +169,7 @@ exports.item = function (request, response) {
       if (campaign) {
         response.view('item', {
           member: request.auth.credentials,
-          form_action_url: '/campaign/' + request.params.campaign_id + '/item'
+          form_action_url: '/campaign/' + campaign.slug + '/item'
         });
       } else {
         response.redirect('/');
