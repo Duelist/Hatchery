@@ -1,7 +1,10 @@
 var async = require('async'),
     bcrypt = require('bcrypt'),
     slug = require('slug'),
-    models = require('./models');
+    models = require('./models'),
+    context = {
+      message: ''
+    };
 
 exports.home = function (request, response) {
   return response.view('index', {
@@ -10,15 +13,13 @@ exports.home = function (request, response) {
 }
 
 exports.login = function (request, response) {
-  var message = '';
-
   if (request.auth.isAuthenticated) {
     return response.redirect('/');
   }
 
   if (request.method === 'post') {
     if (!request.payload.username || !request.payload.password) {
-      message = 'Missing username or password.';
+      context.message = 'Missing username or password.';
     } else {
       models.member.findOne({
         where: {
@@ -31,19 +32,17 @@ exports.login = function (request, response) {
               request.auth.session.set(member);
               return response.redirect('/');
             } else {
-              message = 'Invalid username or password.';
+              context.message = 'Invalid username or password.';
             }
           })
         } else {
-          message = 'Invalid username or password.';
+          context.message = 'Invalid username or password.';
         }
       });
     }
   }
 
-  return response.view('login', {
-    message: message
-  });
+  return response.view('login', context);
 }
 
 exports.logout = function (request, response) {
@@ -52,7 +51,8 @@ exports.logout = function (request, response) {
 }
 
 exports.campaign = function (request, response) {
-  var message = '';
+  context.member = request.auth.credentials || {};
+  context.form_action_url = '/campaign';
 
   if (request.method === 'post') {
     if (request.payload.name) {
@@ -68,15 +68,11 @@ exports.campaign = function (request, response) {
     }
   }
 
-  return response.view('campaign', {
-    member: request.auth.credentials,
-    form_action_url: '/campaign',
-    message: message
-  });
+  return response.view('campaign', context);
 }
 
 exports.character = function (request, response) {
-  var message = '';
+  context.member = request.auth.credentials || {};
 
   models.campaign.findOne({
     where: {
@@ -96,18 +92,15 @@ exports.character = function (request, response) {
         });
       }
 
-      message = 'Please enter a character name.';
+      context.message = 'Please enter a character name.';
     }
   });
 
-  return response.view('character', {
-    member: request.auth.credentials,
-    message: message
-  });
+  return response.view('character', context);
 }
 
 exports.item = function (request, response) {
-  var message = '';
+  context.member = request.auth.credentials || {};
 
   models.campaign.findOne({
     where: {
@@ -126,12 +119,9 @@ exports.item = function (request, response) {
         });
       }
 
-      message = 'Please enter an item name.';
+      context.message = 'Please enter an item name.';
     }
   });
 
-  return response.view('item', {
-    member: request.auth.credentials,
-    message: message
-  });
+  return response.view('item', context);
 }
