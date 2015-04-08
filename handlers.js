@@ -88,7 +88,7 @@ exports.character = function (request, response) {
             member_id: request.auth.credentials.id,
             campaign_id: campaign.id
           }).then(function (character) {
-            return response().redirect('/');
+            return response.redirect('/').close();
           });
         }
 
@@ -97,7 +97,7 @@ exports.character = function (request, response) {
     }
   });
 
-  return response.view('character', context);
+  return response.view('character', context).close();
 }
 
 exports.item = function (request, response) {
