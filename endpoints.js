@@ -162,9 +162,9 @@ exports.item = function (request, response) {
       });
     }
   } else {
-    models.item.findOne({
+    models.campaign.findOne({
       where: {
-        slug: request.params.item_slug
+        slug: request.params.campaign_slug
       }
     }).then(function (item) {
       if (item) {
