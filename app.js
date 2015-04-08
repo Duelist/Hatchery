@@ -5,8 +5,7 @@ var hapi = require('hapi'),
     slug = require('slug'),
     redis = require('redis'),
     models = require('./models'),
-    server = new hapi.Server(),
-    routes = [];
+    server = new hapi.Server();
 
 server.connection({
   host: '0.0.0.0',

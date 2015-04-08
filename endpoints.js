@@ -54,7 +54,7 @@ exports.logout = function (request, response) {
   return response.redirect('/');
 }
 
-exports.logout = function (request, response) {
+exports.campaign = function (request, response) {
   if (request.method === 'post') {
     if (request.payload.name) {
       // Create campaign
