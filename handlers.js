@@ -6,14 +6,14 @@ var async = require('async'),
       message: ''
     };
 
-exports.home = function (request, response) {
+exports.home = function (request, reply) {
   context.member = request.auth.credentials || {};
-  return response.view('index', context);
+  reply.view('index', context);
 }
 
-exports.login = function (request, response) {
+exports.login = function (request, reply) {
   if (request.auth.isAuthenticated) {
-    return response.redirect('/');
+    return reply.redirect('/');
   }
 
   if (request.method === 'post') {
@@ -29,7 +29,7 @@ exports.login = function (request, response) {
           bcrypt.compare(request.payload.password, member.password, function (err, is_valid) {
             if (is_valid) {
               request.auth.session.set(member);
-              return response.redirect('/');
+              return reply.redirect('/');
             } else {
               context.message = 'Invalid username or password.';
             }
@@ -41,15 +41,15 @@ exports.login = function (request, response) {
     }
   }
 
-  return response.view('login', context);
+  reply.view('login', context);
 }
 
-exports.logout = function (request, response) {
+exports.logout = function (request, reply) {
   request.auth.session.clear();
-  return response.redirect('/');
+  reply.redirect('/');
 }
 
-exports.campaign = function (request, response) {
+exports.campaign = function (request, reply) {
   context.member = request.auth.credentials || {};
   context.form_action_url = '/campaign';
 
@@ -62,15 +62,15 @@ exports.campaign = function (request, response) {
         slug: slug(request.payload.name).toLowerCase(),
         member_id: request.auth.credentials.id
       }).then(function (campaign) {
-        return response.redirect('/');
+        return reply.redirect('/');
       });
     }
   }
 
-  return response.view('campaign', context);
+  reply.view('campaign', context);
 }
 
-exports.character = function (request, response) {
+exports.character = function (request, reply) {
   context.member = request.auth.credentials || {};
 
   models.campaign.findOne({
@@ -88,7 +88,7 @@ exports.character = function (request, response) {
             member_id: request.auth.credentials.id,
             campaign_id: campaign.id
           }).then(function (character) {
-            return response.redirect('/').close();
+            return reply.redirect('/');
           });
         }
 
@@ -97,10 +97,10 @@ exports.character = function (request, response) {
     }
   });
 
-  return response.view('character', context).close();
+  reply.view('character', context);
 }
 
-exports.item = function (request, response) {
+exports.item = function (request, reply) {
   context.member = request.auth.credentials || {};
 
   models.campaign.findOne({
@@ -117,7 +117,7 @@ exports.item = function (request, response) {
             slug: slug(request.payload.name).toLowerCase(),
             campaign_id: campaign.id
           }).then(function (item) {
-            return response.redirect('/');
+            return reply.redirect('/');
           });
         }
 
@@ -126,5 +126,5 @@ exports.item = function (request, response) {
     }
   });
 
-  return response.view('item', context);
+  reply.view('item', context);
 }
