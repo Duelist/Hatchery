@@ -84,7 +84,7 @@ exports.character = function (request, response) {
     }
   }).success(function (campaign) {
     if (request.method === 'post') {
-      if (request.payload.name) {
+      if (request.payload.name && campaign) {
         models.character.create({
           name: request.payload.name,
           bio: request.payload.bio,
@@ -115,7 +115,7 @@ exports.item = function (request, response) {
     }
   }).then(function (campaign) {
     if (request.method === 'post') {
-      if (request.payload.name) {
+      if (request.payload.name && campaign) {
         models.item.create({
           name: request.payload.name,
           description: request.payload.description,
