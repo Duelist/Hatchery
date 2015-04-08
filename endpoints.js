@@ -166,11 +166,11 @@ exports.item = function (request, response) {
       where: {
         slug: request.params.campaign_slug
       }
-    }).then(function (item) {
-      if (item) {
+    }).then(function (campaign) {
+      if (campaign) {
         response.view('item', {
           member: request.auth.credentials,
-          form_action_url: '/campaign/' + request.params.campaign_id + '/character/' + request.params.character_id + '/item'
+          form_action_url: '/campaign/' + request.params.campaign_id + '/item'
         });
       } else {
         response.redirect('/');
