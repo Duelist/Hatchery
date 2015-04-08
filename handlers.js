@@ -89,7 +89,7 @@ exports.character = function (request, response) {
   }).then(function (campaign) {
     message = campaign;
     if (!campaign) {
-      return response.redirect('/');
+      response.redirect('/');
     }
 
     if (request.method === 'post') {
@@ -102,7 +102,7 @@ exports.character = function (request, response) {
           campaign_id: campaign.id
         }).then(function (character) {
           if (character) {
-            return response.redirect('/');
+            response.redirect('/');
           }
 
           // message = 'Could not create a new character.';
