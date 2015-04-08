@@ -144,8 +144,7 @@ exports.item = function (request, response) {
           models.item.create({
             name: request.payload.name,
             description: request.payload.description,
-            slug: slug(request.payload.name),
-            character_id: character.id
+            slug: slug(request.payload.name)
           }).then(function (item) {
             if (item) {
               response.redirect('/');
