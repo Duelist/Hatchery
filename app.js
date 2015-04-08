@@ -31,7 +31,7 @@ server.register(cookie_auth, function (err) {
     isSecure: false 
   });
 
-  server.route(require('./endpoints'));
+  server.route(require('./routes'));
 
   models.sequelize.sync({ force: true }).then(function () {
     /* Seed data */
