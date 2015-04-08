@@ -1,5 +1,6 @@
 var async = require('async'),
     bcrypt = require('bcrypt'),
+    boom = require('boom'),
     slug = require('slug'),
     models = require('./models'),
     context = {
@@ -78,10 +79,8 @@ exports.character = function (request, reply) {
       slug: request.params.campaign_slug
     }
   }).then(function (campaign) {
-    if (request.method === 'post') {
-      console.log('IBTEST');
-      console.log(campaign);
-      if (campaign) {
+    if (campaign) {
+      if (request.method === 'post') {
         if (request.payload.name) {
           models.character.create({
             name: request.payload.name,
@@ -90,16 +89,23 @@ exports.character = function (request, reply) {
             member_id: request.auth.credentials.id,
             campaign_id: campaign.id
           }).then(function (character) {
-            return reply.redirect('/');
+            if (character) {
+              return reply.redirect('/');
+            } else {
+              return reply(boom.badRequest('Could not create character.'));
+            }
           });
+        } else {
+          context.message = 'Please enter a character name.';
+          return reply.view('character', context);
         }
-
-        context.message = 'Please enter a character name.';
+      } else {
+        return reply.view('character', context);
       }
+    } else {
+      return reply(boom.notFound('Could not find campaign.'));
     }
   });
-
-  reply.view('character', context);
 }
 
 exports.item = function (request, reply) {
