@@ -62,12 +62,8 @@ exports.campaign = function (request, response) {
         description: request.payload.description,
         slug: slug(request.payload.name).toLowerCase(),
         member_id: request.auth.credentials.id
-      }).then(function (campaign) {
-        if (campaign) {
-          return response.redirect('/');
-        }
-
-        message = 'Could not create a new campaign.';
+      }).success(function (campaign) {
+        return response.redirect('/');
       });
     }
   }
@@ -86,12 +82,7 @@ exports.character = function (request, response) {
     where: {
       slug: request.params.campaign_slug
     }
-  }).then(function (campaign) {
-    message = campaign;
-    if (!campaign) {
-      response.redirect('/');
-    }
-
+  }).success(function (campaign) {
     if (request.method === 'post') {
       if (request.payload.name) {
         models.character.create({
@@ -100,16 +91,12 @@ exports.character = function (request, response) {
           slug: slug(request.payload.name).toLowerCase(),
           member_id: request.auth.credentials.id,
           campaign_id: campaign.id
-        }).then(function (character) {
-          if (character) {
-            response.redirect('/');
-          }
-
-          // message = 'Could not create a new character.';
+        }).success(function (character) {
+          return response.redirect('/');
         });
       }
 
-      // message = 'Please enter a character name.';
+      message = 'Please enter a character name.';
     }
   });
 
@@ -127,10 +114,6 @@ exports.item = function (request, response) {
       slug: request.params.campaign_slug
     }
   }).then(function (campaign) {
-    if (!campaign) {
-      return response.redirect('/');
-    }
-
     if (request.method === 'post') {
       if (request.payload.name) {
         models.item.create({
@@ -139,11 +122,7 @@ exports.item = function (request, response) {
           slug: slug(request.payload.name).toLowerCase(),
           campaign_id: campaign.id
         }).then(function (item) {
-          if (item) {
-            return response.redirect('/');
-          }
-
-          message = 'Could not create a new item.';
+          return response.redirect('/');
         });
       }
 
