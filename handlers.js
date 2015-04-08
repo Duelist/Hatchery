@@ -79,6 +79,8 @@ exports.character = function (request, reply) {
     }
   }).then(function (campaign) {
     if (request.method === 'post') {
+      console.log('IBTEST');
+      console.log(campaign);
       if (campaign) {
         if (request.payload.name) {
           models.character.create({
