@@ -7,9 +7,8 @@ var async = require('async'),
     };
 
 exports.home = function (request, response) {
-  return response.view('index', {
-    member: request.auth.credentials
-  });
+  context.member = request.auth.credentials || {};
+  return response.view('index', context);
 }
 
 exports.login = function (request, response) {
@@ -62,7 +61,7 @@ exports.campaign = function (request, response) {
         description: request.payload.description,
         slug: slug(request.payload.name).toLowerCase(),
         member_id: request.auth.credentials.id
-      }).success(function (campaign) {
+      }).then(function (campaign) {
         return response.redirect('/');
       });
     }
@@ -78,7 +77,7 @@ exports.character = function (request, response) {
     where: {
       slug: request.params.campaign_slug
     }
-  }).success(function (campaign) {
+  }).then(function (campaign) {
     if (request.method === 'post') {
       if (request.payload.name && campaign) {
         models.character.create({
@@ -87,7 +86,7 @@ exports.character = function (request, response) {
           slug: slug(request.payload.name).toLowerCase(),
           member_id: request.auth.credentials.id,
           campaign_id: campaign.id
-        }).success(function (character) {
+        }).then(function (character) {
           return response.redirect('/');
         });
       }
