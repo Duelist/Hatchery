@@ -98,7 +98,7 @@ exports.character = function (request, response) {
           bio: request.payload.bio,
           slug: slug(request.payload.name).toLowerCase(),
           member_id: request.auth.credentials.id,
-          campaign_id: request.params.campaign_id
+          campaign_id: campaign.id
         }).then(function (character) {
           if (character) {
             return response.redirect('/');
@@ -134,9 +134,9 @@ exports.item = function (request, response) {
       if (request.payload.name) {
         models.item.create({
           name: request.payload.name,
-          description: request.payload.bio,
+          description: request.payload.description,
           slug: slug(request.payload.name).toLowerCase(),
-          campaign_id: request.params.campaign_id
+          campaign_id: campaign.id
         }).then(function (item) {
           if (item) {
             return response.redirect('/');
