@@ -79,19 +79,21 @@ exports.character = function (request, response) {
     }
   }).then(function (campaign) {
     if (request.method === 'post') {
-      if (request.payload.name && campaign) {
-        models.character.create({
-          name: request.payload.name,
-          bio: request.payload.bio,
-          slug: slug(request.payload.name).toLowerCase(),
-          member_id: request.auth.credentials.id,
-          campaign_id: campaign.id
-        }).then(function (character) {
-          return response.redirect('/');
-        });
-      }
+      if (campaign) {
+        if (request.payload.name) {
+          models.character.create({
+            name: request.payload.name,
+            bio: request.payload.bio,
+            slug: slug(request.payload.name).toLowerCase(),
+            member_id: request.auth.credentials.id,
+            campaign_id: campaign.id
+          }).then(function (character) {
+            return response.redirect('/');
+          });
+        }
 
-      context.message = 'Please enter a character name.';
+        context.message = 'Please enter a character name.';
+      }
     }
   });
 
@@ -107,18 +109,20 @@ exports.item = function (request, response) {
     }
   }).then(function (campaign) {
     if (request.method === 'post') {
-      if (request.payload.name && campaign) {
-        models.item.create({
-          name: request.payload.name,
-          description: request.payload.description,
-          slug: slug(request.payload.name).toLowerCase(),
-          campaign_id: campaign.id
-        }).then(function (item) {
-          return response.redirect('/');
-        });
-      }
+      if (campaign) {
+        if (request.payload.name) {
+          models.item.create({
+            name: request.payload.name,
+            description: request.payload.description,
+            slug: slug(request.payload.name).toLowerCase(),
+            campaign_id: campaign.id
+          }).then(function (item) {
+            return response.redirect('/');
+          });
+        }
 
-      context.message = 'Please enter an item name.';
+        context.message = 'Please enter an item name.';
+      }
     }
   });
 
