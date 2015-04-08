@@ -1,12 +1,14 @@
 'use strict';
 
-var bcrypt = require('bcrypt');
-var hapi = require('hapi');
-var cookie_auth = require('hapi-auth-cookie');
-var slug = require('slug');
-var models = require('./models');
-
-var server = new hapi.Server();
+var async = require('async'),
+    bcrypt = require('bcrypt'),
+    hapi = require('hapi'),
+    cookie_auth = require('hapi-auth-cookie'),
+    slug = require('slug'),
+    redis = require('redis'),
+    models = require('./models'),
+    server = new hapi.Server(),
+    routes = [];
 
 server.connection({
   host: '0.0.0.0',
@@ -23,7 +25,7 @@ server.views({
 
 /* Routes */
 
-var routes = [
+routes = [
   {
     method: 'GET',
     path: '/',
@@ -104,7 +106,7 @@ var routes = [
   },
   {
     method: ['GET', 'POST'],
-    path: '/campaign/{campaign_slug}/character/{character_slug}/item',
+    path: '/campaign/{campaign_slug}/item',
     handler: item,
     config: {
       auth: {
@@ -255,29 +257,19 @@ function item(request, response) {
         }
       }).then(function (campaign) {
         if (campaign) {
-          models.character.findOne({
-            where: {
-              slug: request.params.character_slug
-            }
-          }).then(function (character) {
-            if (character) {
-              models.item.create({
-                name: request.payload.name,
-                description: request.payload.description,
-                slug: slug(request.payload.name),
-                character_id: character.id
-              }).then(function (item) {
-                if (item) {
-                  response.redirect('/');
-                } else {
-                  response.view('item', {
-                    member: request.auth.credentials,
-                    message: 'Could not create a new item.'
-                  });
-                }
-              });
-            } else {
+          models.item.create({
+            name: request.payload.name,
+            description: request.payload.description,
+            slug: slug(request.payload.name),
+            character_id: character.id
+          }).then(function (item) {
+            if (item) {
               response.redirect('/');
+            } else {
+              response.view('item', {
+                member: request.auth.credentials,
+                message: 'Could not create a new item.'
+              });
             }
           });
         } else {
@@ -316,54 +308,54 @@ server.register(cookie_auth, function (err) {
   server.route(routes);
 
   models.sequelize.sync({ force: true }).then(function () {
-      /* Seed data */
+    /* Seed data */
 
-      models.member.create({
-        username: 'Duelist',
-        password: '$2a$10$p9yFI0kQNAT3GyTb4PPlku6Oko0n2n8rFbb2LTx16Syn54KyX4ofi',
-        email: 'ianbenedict@gmail.com'
-      }).then(function (member) {
-        models.campaign.create({
-          name: 'Test Campaign',
-          description: 'This is a test campaign.',
-          slug: slug('Test Campaign').toLowerCase(),
+    models.member.create({
+      username: 'Duelist',
+      password: '$2a$10$p9yFI0kQNAT3GyTb4PPlku6Oko0n2n8rFbb2LTx16Syn54KyX4ofi',
+      email: 'ianbenedict@gmail.com'
+    }).then(function (member) {
+      models.campaign.create({
+        name: 'Test Campaign',
+        description: 'This is a test campaign.',
+        slug: slug('Test Campaign').toLowerCase(),
+        member_id: member.id
+      }).then(function (campaign) {
+        models.character.create({
+          name: 'Test Character',
+          bio: 'I am a test.',
+          slug: slug('Test Character').toLowerCase(),
+          campaign_id: campaign.id,
           member_id: member.id
-        }).then(function (campaign) {
-          models.character.create({
-            name: 'Test Character',
-            bio: 'I am a test.',
-            slug: slug('Test Character').toLowerCase(),
-            campaign_id: campaign.id,
-            member_id: member.id
-          }).then(function (character) {
-            models.item.create({
-              name: 'Test Item',
-              description: 'This is a test item.',
-              slug: slug('Test Item').toLowerCase(),
-              character_id: character.id
-            });
-          });
-          models.campaign_map.create({
-            name: 'Test Map',
-            slug: slug('Test Map').toLowerCase(),
-            campaign_id: campaign.id
-          });
-          models.blog.create({
-            name: 'Test Campaign Blog',
-            campaign_id: campaign.id
-          }).then(function (blog) {
-            models.blog_post.create({
-              title: 'Test Post',
-              body: 'This is a test blog post.',
-              slug: slug('Test Post').toLowerCase(),
-              blog_id: blog.id,
-              member_id: member.id
-            });
+        }).then(function (character) {
+          models.item.create({
+            name: 'Test Item',
+            description: 'This is a test item.',
+            slug: slug('Test Item').toLowerCase(),
+            character_id: character.id
           });
         });
-      }).then(function () {
-        server.start();
+        models.campaign_map.create({
+          name: 'Test Map',
+          slug: slug('Test Map').toLowerCase(),
+          campaign_id: campaign.id
+        });
+        models.blog.create({
+          name: 'Test Campaign Blog',
+          campaign_id: campaign.id
+        }).then(function (blog) {
+          models.blog_post.create({
+            title: 'Test Post',
+            body: 'This is a test blog post.',
+            slug: slug('Test Post').toLowerCase(),
+            blog_id: blog.id,
+            member_id: member.id
+          });
+        });
       });
+    }).then(function () {
+      server.start();
+    });
   });
 });
 
