@@ -57,6 +57,7 @@ server.register(cookie_auth, function (err) {
             name: 'Test Item',
             description: 'This is a test item.',
             slug: slug('Test Item').toLowerCase(),
+            campaign_id: campaign.id,
             character_id: character.id
           });
         });
