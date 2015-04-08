@@ -86,11 +86,7 @@ exports.character = function (request, response) {
     where: {
       slug: request.params.campaign_slug
     }
-  }).then(function (campaign) {
-    if (!campaign) {
-      return response.redirect('/');
-    }
-
+  }).success(function (campaign) {
     if (request.method === 'post') {
       if (request.payload.name) {
         models.character.create({
@@ -99,17 +95,17 @@ exports.character = function (request, response) {
           slug: slug(request.payload.name).toLowerCase(),
           member_id: request.auth.credentials.id,
           campaign_id: campaign.id
-        }).then(function (character) {
-          if (character) {
-            return response.redirect('/');
-          }
-
+        }).success(function (character) {
           message = 'Could not create a new character.';
+        }).error(function (err) {
+          return response.redirect('/');
         });
       }
 
       message = 'Please enter a character name.';
     }
+  }).error(function (err) {
+    return response.redirect('/');
   });
 
   return response.view('character', {
