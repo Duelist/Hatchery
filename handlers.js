@@ -4,7 +4,8 @@ var async = require('async'),
     redis = require('redis'),
     slug = require('slug'),
     models = require('./models'),
-    context = {};
+    context = {},
+    redis_client = redis.createClient();
 
 exports.home = function (request, reply) {
   context.member = request.auth.credentials || null;
@@ -50,7 +51,7 @@ exports.logout = function (request, reply) {
 }
 
 exports.new_campaign = function (request, reply) {
-  context.member = request.auth.credentials || {};
+  context.member = request.auth.credentials || null;
   context.form_action_url = '/campaign';
   context.message = '';
 
@@ -58,7 +59,7 @@ exports.new_campaign = function (request, reply) {
 }
 
 exports.create_campaign = function (request, reply) {
-  context.member = request.auth.credentials || {};
+  context.member = request.auth.credentials || null;
   context.form_action_url = '/campaign';
   context.message = '';
 
@@ -82,7 +83,7 @@ exports.create_campaign = function (request, reply) {
 }
 
 exports.new_character = function (request, reply) {
-  context.member = request.auth.credentials || {};
+  context.member = request.auth.credentials || null;
   context.form_action_url = '/campaign/' + request.params.campaign_slug + '/character';
   context.message = '';
 
@@ -100,7 +101,7 @@ exports.new_character = function (request, reply) {
 }
 
 exports.create_character = function (request, reply) {
-  context.member = request.auth.credentials || {};
+  context.member = request.auth.credentials || null;
   context.form_action_url = '/campaign/' + request.params.campaign_slug + '/character';
   context.message = '';
 
@@ -135,7 +136,7 @@ exports.create_character = function (request, reply) {
 }
 
 exports.new_item = function (request, reply) {
-  context.member = request.auth.credentials || {};
+  context.member = request.auth.credentials || null;
   context.form_action_url = '/campaign/' + request.params.campaign_slug + '/item';
   context.message = '';
 
@@ -153,7 +154,7 @@ exports.new_item = function (request, reply) {
 }
 
 exports.create_item = function (request, reply) {
-  context.member = request.auth.credentials || {};
+  context.member = request.auth.credentials || null;
   context.form_action_url = '/campaign/' + request.params.campaign_slug + '/item';
   context.message = '';
 
