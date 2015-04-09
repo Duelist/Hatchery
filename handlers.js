@@ -50,29 +50,38 @@ exports.logout = function (request, reply) {
   reply.redirect('/');
 }
 
-exports.campaign = function (request, reply) {
+exports.new_campaign = function (request, reply) {
   context.member = request.auth.credentials || {};
   context.form_action_url = '/campaign';
-
-  if (request.method === 'post') {
-    if (request.payload.name) {
-      // Create campaign
-      models.campaign.create({
-        name: request.payload.name,
-        description: request.payload.description,
-        slug: slug(request.payload.name).toLowerCase(),
-        member_id: request.auth.credentials.id
-      }).then(function (campaign) {
-        return reply.redirect('/');
-      });
-    }
-  }
 
   reply.view('campaign', context);
 }
 
-exports.character = function (request, reply) {
+exports.create_campaign = function (request, reply) {
   context.member = request.auth.credentials || {};
+  context.form_action_url = '/campaign';
+
+  if (request.payload.name) {
+    models.campaign.create({
+      name: request.payload.name,
+      description: request.payload.description,
+      slug: slug(request.payload.name).toLowerCase(),
+      member_id: request.auth.credentials.id
+    }).then(function (campaign) {
+      if (campaign) {
+        return reply.redirect('/');
+      } else {
+        return reply(boom.notFound('Could not find campaign.'));
+      }
+    });
+  } else {
+    return reply.view('campaign', context);
+  }
+}
+
+exports.new_character = function (request, reply) {
+  context.member = request.auth.credentials || {};
+  context.form_action_url = '/campaign' + request.params.campaign_slug + '/character';
 
   models.campaign.findOne({
     where: {
@@ -80,26 +89,39 @@ exports.character = function (request, reply) {
     }
   }).then(function (campaign) {
     if (campaign) {
-      if (request.method === 'post') {
-        if (request.payload.name) {
-          models.character.create({
-            name: request.payload.name,
-            bio: request.payload.bio,
-            slug: slug(request.payload.name).toLowerCase(),
-            member_id: request.auth.credentials.id,
-            campaign_id: campaign.id
-          }).then(function (character) {
-            if (character) {
-              return reply.redirect('/');
-            } else {
-              return reply(boom.badRequest('Could not create character.'));
-            }
-          });
-        } else {
-          context.message = 'Please enter a character name.';
-          return reply.view('character', context);
-        }
+      return reply.view('character', context);
+    } else {
+      return reply(boom.notFound('Could not find campaign.'));
+    }
+  });
+}
+
+exports.create_character = function (request, reply) {
+  context.member = request.auth.credentials || {};
+  context.form_action_url = '/campaign' + request.params.campaign_slug + '/character';
+
+  models.campaign.findOne({
+    where: {
+      slug: request.params.campaign_slug
+    }
+  }).then(function (campaign) {
+    if (campaign) {
+      if (request.payload.name) {
+        models.character.create({
+          name: request.payload.name,
+          bio: request.payload.bio,
+          slug: slug(request.payload.name).toLowerCase(),
+          member_id: request.auth.credentials.id,
+          campaign_id: campaign.id
+        }).then(function (character) {
+          if (character) {
+            return reply.redirect('/');
+          } else {
+            return reply(boom.badRequest('Could not create character.'));
+          }
+        });
       } else {
+        context.message = 'Please enter a character name.';
         return reply.view('character', context);
       }
     } else {
@@ -108,31 +130,52 @@ exports.character = function (request, reply) {
   });
 }
 
-exports.item = function (request, reply) {
+exports.new_item = function (request, reply) {
   context.member = request.auth.credentials || {};
+  context.form_action_url = '/campaign' + request.params.campaign_slug + '/item';
 
   models.campaign.findOne({
     where: {
       slug: request.params.campaign_slug
     }
   }).then(function (campaign) {
-    if (request.method === 'post') {
-      if (campaign) {
-        if (request.payload.name) {
-          models.item.create({
-            name: request.payload.name,
-            description: request.payload.description,
-            slug: slug(request.payload.name).toLowerCase(),
-            campaign_id: campaign.id
-          }).then(function (item) {
-            return reply.redirect('/');
-          });
-        }
-
-        context.message = 'Please enter an item name.';
-      }
+    if (campaign) {
+      return reply.view('item', context);
+    } else {
+      return reply(boom.notFound('Could not find campaign.'));
     }
   });
+}
 
-  reply.view('item', context);
+exports.create_item = function (request, reply) {
+  context.member = request.auth.credentials || {};
+  context.form_action_url = '/campaign' + request.params.campaign_slug + '/item';
+
+  models.campaign.findOne({
+    where: {
+      slug: request.params.campaign_slug
+    }
+  }).then(function (campaign) {
+    if (campaign) {
+      if (request.payload.name) {
+        models.item.create({
+          name: request.payload.name,
+          description: request.payload.description,
+          slug: slug(request.payload.name).toLowerCase(),
+          campaign_id: campaign.id
+        }).then(function (item) {
+          if (item) {
+            return reply.redirect('/');
+          } else {
+            return reply(boom.badRequest('Could not create item.'));
+          }
+        });
+      } else {
+        context.message = 'Please enter an item name.';
+        return reply.view('item', context);
+      }
+    } else {
+      return reply(boom.notFound('Could not find item.'));
+    }
+  });
 }

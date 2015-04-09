@@ -50,9 +50,24 @@ module.exports = [
     }
   },
   {
-    method: ['GET', 'POST'],
+    method: ['GET'],
+    path: '/campaign/new',
+    handler: handlers.new_campaign,
+    config: {
+      auth: {
+        strategy: 'session'
+      },
+      plugins: {
+        'hapi-auth-cookie': {
+          redirectTo: '/'
+        }
+      }
+    }
+  },
+  {
+    method: ['POST'],
     path: '/campaign',
-    handler: handlers.campaign,
+    handler: handlers.create_campaign,
     config: {
       auth: {
         strategy: 'session'
@@ -65,9 +80,24 @@ module.exports = [
     }
   },
   {
-    method: ['GET', 'POST'],
+    method: ['GET'],
+    path: '/campaign/{campaign_slug}/character/new',
+    handler: handlers.new_character,
+    config: {
+      auth: {
+        strategy: 'session'
+      },
+      plugins: {
+        'hapi-auth-cookie': {
+          redirectTo: '/'
+        }
+      }
+    }
+  },
+  {
+    method: ['POST'],
     path: '/campaign/{campaign_slug}/character',
-    handler: handlers.character,
+    handler: handlers.create_character,
     config: {
       auth: {
         strategy: 'session'
@@ -80,9 +110,24 @@ module.exports = [
     }
   },
   {
-    method: ['GET', 'POST'],
+    method: ['GET'],
     path: '/campaign/{campaign_slug}/item',
-    handler: handlers.item,
+    handler: handlers.new_item,
+    config: {
+      auth: {
+        strategy: 'session'
+      },
+      plugins: {
+        'hapi-auth-cookie': {
+          redirectTo: '/'
+        }
+      }
+    }
+  },
+  {
+    method: ['POST'],
+    path: '/campaign/{campaign_slug}/item',
+    handler: handlers.create_item,
     config: {
       auth: {
         strategy: 'session'
