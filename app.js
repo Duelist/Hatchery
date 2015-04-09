@@ -3,7 +3,6 @@
 var hapi = require('hapi'),
     cookie_auth = require('hapi-auth-cookie'),
     slug = require('slug'),
-    redis = require('redis'),
     models = require('./models'),
     server = new hapi.Server();
 

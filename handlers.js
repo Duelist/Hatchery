@@ -1,12 +1,13 @@
 var async = require('async'),
     bcrypt = require('bcrypt'),
     boom = require('boom'),
+    redis = require('redis'),
     slug = require('slug'),
     models = require('./models'),
     context = {};
 
 exports.home = function (request, reply) {
-  context.member = request.auth.credentials || {};
+  context.member = request.auth.credentials || null;
   reply.view('index', context);
 }
 
