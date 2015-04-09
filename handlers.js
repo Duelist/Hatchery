@@ -75,13 +75,14 @@ exports.create_campaign = function (request, reply) {
       }
     });
   } else {
+    context.message = 'Please enter a campaign name.';
     return reply.view('campaign', context);
   }
 }
 
 exports.new_character = function (request, reply) {
   context.member = request.auth.credentials || {};
-  context.form_action_url = '/campaign' + request.params.campaign_slug + '/character';
+  context.form_action_url = '/campaign/' + request.params.campaign_slug + '/character';
 
   models.campaign.findOne({
     where: {
@@ -98,7 +99,7 @@ exports.new_character = function (request, reply) {
 
 exports.create_character = function (request, reply) {
   context.member = request.auth.credentials || {};
-  context.form_action_url = '/campaign' + request.params.campaign_slug + '/character';
+  context.form_action_url = '/campaign/' + request.params.campaign_slug + '/character';
 
   models.campaign.findOne({
     where: {
@@ -132,7 +133,7 @@ exports.create_character = function (request, reply) {
 
 exports.new_item = function (request, reply) {
   context.member = request.auth.credentials || {};
-  context.form_action_url = '/campaign' + request.params.campaign_slug + '/item';
+  context.form_action_url = '/campaign/' + request.params.campaign_slug + '/item';
 
   models.campaign.findOne({
     where: {
@@ -149,7 +150,7 @@ exports.new_item = function (request, reply) {
 
 exports.create_item = function (request, reply) {
   context.member = request.auth.credentials || {};
-  context.form_action_url = '/campaign' + request.params.campaign_slug + '/item';
+  context.form_action_url = '/campaign/' + request.params.campaign_slug + '/item';
 
   models.campaign.findOne({
     where: {
