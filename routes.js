@@ -18,9 +18,25 @@ module.exports = [
     }
   },
   {
-    method: ['GET', 'POST'],
+    method: ['GET'],
     path: '/login',
-    handler: handlers.login,
+    handler: handlers.get_login,
+    config: {
+      auth: {
+        mode: 'try',
+        strategy: 'session'
+      },
+      plugins: {
+        'hapi-auth-cookie': {
+          redirectTo: false
+        }
+      }
+    }
+  },
+  {
+    method: ['POST'],
+    path: '/login',
+    handler: handlers.post_login,
     config: {
       auth: {
         mode: 'try',

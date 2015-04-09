@@ -15,37 +15,44 @@ exports.home = function (request, reply) {
   reply.view('index', context);
 }
 
-exports.login = function (request, reply) {
+exports.get_login = function (request, reply) {
+  if (request.auth.isAuthenticated) {
+    return reply.redirect('/');
+  } else {
+    return reply.view('login', context);
+  }
+}
+
+exports.post_login = function (request, reply) {
   if (request.auth.isAuthenticated) {
     return reply.redirect('/');
   }
 
-  if (request.method === 'post') {
-    if (!request.payload.username || !request.payload.password) {
-      context.message = 'Missing username or password.';
-    } else {
-      models.member.findOne({
-        where: {
-          username: request.payload.username
-        }
-      }).then(function (member) {
-        if (member) {
-          bcrypt.compare(request.payload.password, member.password, function (err, is_valid) {
-            if (is_valid) {
-              request.auth.session.set(member);
-              return reply.redirect('/');
-            } else {
-              context.message = 'Invalid username or password.';
-            }
-          })
-        } else {
-          context.message = 'Invalid username or password.';
-        }
-      });
-    }
+  if (!request.payload.username || !request.payload.password) {
+    context.message = 'Missing username or password.';
+    return reply.view('login', context);
+  } else {
+    models.member.findOne({
+      where: {
+        username: request.payload.username
+      }
+    }).then(function (member) {
+      if (member) {
+        bcrypt.compare(request.payload.password, member.password, function (err, is_valid) {
+          if (is_valid) {
+            request.auth.session.set(member);
+            return reply.redirect('/');
+          } else {
+            context.message = 'Invalid username or password.';
+            return reply.view('login', context);
+          }
+        })
+      } else {
+        context.message = 'Invalid username or password.';
+        return reply.view('login', context);
+      }
+    });
   }
-
-  reply.view('login', context);
 }
 
 exports.logout = function (request, reply) {
