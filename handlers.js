@@ -5,7 +5,10 @@ var async = require('async'),
     slug = require('slug'),
     models = require('./models'),
     context = {},
-    redis_client = redis.createClient();
+    redis_client = redis.createClient(
+      process.env.REDIS_PORT,
+      process.env.REDIS_IP
+    );
 
 exports.home = function (request, reply) {
   context.member = request.auth.credentials || null;
