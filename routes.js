@@ -111,7 +111,7 @@ module.exports = [
   },
   {
     method: ['GET'],
-    path: '/campaign/{campaign_slug}/item',
+    path: '/campaign/{campaign_slug}/item/new',
     handler: handlers.new_item,
     config: {
       auth: {

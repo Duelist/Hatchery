@@ -3,9 +3,7 @@ var async = require('async'),
     boom = require('boom'),
     slug = require('slug'),
     models = require('./models'),
-    context = {
-      message: ''
-    };
+    context = {};
 
 exports.home = function (request, reply) {
   context.member = request.auth.credentials || {};
@@ -53,6 +51,7 @@ exports.logout = function (request, reply) {
 exports.new_campaign = function (request, reply) {
   context.member = request.auth.credentials || {};
   context.form_action_url = '/campaign';
+  context.message = '';
 
   reply.view('campaign', context);
 }
@@ -60,6 +59,7 @@ exports.new_campaign = function (request, reply) {
 exports.create_campaign = function (request, reply) {
   context.member = request.auth.credentials || {};
   context.form_action_url = '/campaign';
+  context.message = '';
 
   if (request.payload.name) {
     models.campaign.create({
@@ -83,6 +83,7 @@ exports.create_campaign = function (request, reply) {
 exports.new_character = function (request, reply) {
   context.member = request.auth.credentials || {};
   context.form_action_url = '/campaign/' + request.params.campaign_slug + '/character';
+  context.message = '';
 
   models.campaign.findOne({
     where: {
@@ -100,6 +101,7 @@ exports.new_character = function (request, reply) {
 exports.create_character = function (request, reply) {
   context.member = request.auth.credentials || {};
   context.form_action_url = '/campaign/' + request.params.campaign_slug + '/character';
+  context.message = '';
 
   models.campaign.findOne({
     where: {
@@ -134,6 +136,7 @@ exports.create_character = function (request, reply) {
 exports.new_item = function (request, reply) {
   context.member = request.auth.credentials || {};
   context.form_action_url = '/campaign/' + request.params.campaign_slug + '/item';
+  context.message = '';
 
   models.campaign.findOne({
     where: {
@@ -151,6 +154,7 @@ exports.new_item = function (request, reply) {
 exports.create_item = function (request, reply) {
   context.member = request.auth.credentials || {};
   context.form_action_url = '/campaign/' + request.params.campaign_slug + '/item';
+  context.message = '';
 
   models.campaign.findOne({
     where: {
