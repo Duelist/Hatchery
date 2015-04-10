@@ -71,6 +71,7 @@ module.exports = [
     handler: handlers.new_member,
     config: {
       auth: {
+        mode: 'try',
         strategy: 'session'
       },
       plugins: {
@@ -86,6 +87,7 @@ module.exports = [
     handler: handlers.create_member,
     config: {
       auth: {
+        mode: 'try',
         strategy: 'session'
       },
       plugins: {
