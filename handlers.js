@@ -73,35 +73,39 @@ exports.create_member = function (request, reply) {
   context.form_action_url = '/member';
   context.message = '';
 
-  if (request.payload.email && request.payload.username && request.payload.password) {
-    bcrypt.genSalt(function (err, salt) {
-      if (salt) {
-        bcrypt.hash(request.payload.password, salt, function (err, hash) {
-          if (hash) {
-            models.member.create({
-              username: request.payload.username,
-              password: hash,
-              email: request.payload.email
-            }).then(function (member) {
-              if (member) {
-                return reply.redirect('/');
-              } else {
-                return reply(boom.notFound('Could not create member.'));
-              }
-            });
-          } else {
-            context.message = 'Password could not be hashed.';
-            return reply.view('member', context);
-          }
-        });
-      } else {
-        context.message = 'Salt could not be generated.';
-        return reply.view('member', context);
-      }
-    });
+  if (context.member) {
+    return reply.redirect('/');
   } else {
-    context.message = 'Please fill in all required fields.';
-    return reply.view('member', context);
+    if (request.payload.email && request.payload.username && request.payload.password) {
+      bcrypt.genSalt(function (err, salt) {
+        if (salt) {
+          bcrypt.hash(request.payload.password, salt, function (err, hash) {
+            if (hash) {
+              models.member.create({
+                username: request.payload.username,
+                password: hash,
+                email: request.payload.email
+              }).then(function (member) {
+                if (member) {
+                  return reply.redirect('/');
+                } else {
+                  return reply(boom.notFound('Could not create member.'));
+                }
+              });
+            } else {
+              context.message = 'Password could not be hashed.';
+              return reply.view('member', context);
+            }
+          });
+        } else {
+          context.message = 'Salt could not be generated.';
+          return reply.view('member', context);
+        }
+      });
+    } else {
+      context.message = 'Please fill in all required fields.';
+      return reply.view('member', context);
+    }
   }
 }
 
