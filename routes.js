@@ -67,6 +67,36 @@ module.exports = [
   },
   {
     method: ['GET'],
+    path: '/member/new',
+    handler: handlers.new_member,
+    config: {
+      auth: {
+        strategy: 'session'
+      },
+      plugins: {
+        'hapi-auth-cookie': {
+          redirectTo: '/'
+        }
+      }
+    }
+  },
+  {
+    method: ['POST'],
+    path: '/member',
+    handler: handlers.create_member,
+    config: {
+      auth: {
+        strategy: 'session'
+      },
+      plugins: {
+        'hapi-auth-cookie': {
+          redirectTo: '/'
+        }
+      }
+    }
+  },
+  {
+    method: ['GET'],
     path: '/campaign/new',
     handler: handlers.new_campaign,
     config: {

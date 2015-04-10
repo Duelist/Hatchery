@@ -60,12 +60,49 @@ exports.logout = function (request, reply) {
   reply.redirect('/');
 }
 
+exports.new_member = function (request, reply) {
+  context.member = request.auth.credentials || null;
+  context.form_action_url = '/member';
+  context.message = '';
+
+  return reply.view('member', context);
+}
+
+exports.create_member = function (request, reply) {
+  context.member = request.auth.credentials || null;
+  context.form_action_url = '/member';
+  context.message = '';
+
+  if (request.payload.username && request.payload.password
+      && request.payload.email) {
+
+    bcrypt.genSalt(function (err, salt) {
+      bcrypt.hash(request.payload.password, salt, function (err, hash) {
+        models.member.create({
+          username: request.payload.username,
+          password: hash,
+          email: request.payload.email
+        }).then(function (member) {
+          if (member) {
+            return reply.redirect('/');
+          } else {
+            return reply(boom.notFound('Could not create member.'));
+          }
+        }):
+      });
+    });
+  } else {
+    context.message = 'Please fill in all required fields.';
+    return reply.view('member', context);
+  }
+}
+
 exports.new_campaign = function (request, reply) {
   context.member = request.auth.credentials || null;
   context.form_action_url = '/campaign';
   context.message = '';
 
-  reply.view('campaign', context);
+  return reply.view('campaign', context);
 }
 
 exports.create_campaign = function (request, reply) {
@@ -83,7 +120,7 @@ exports.create_campaign = function (request, reply) {
       if (campaign) {
         return reply.redirect('/');
       } else {
-        return reply(boom.notFound('Could not find campaign.'));
+        return reply(boom.notFound('Could not create campaign.'));
       }
     });
   } else {
