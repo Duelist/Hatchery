@@ -90,26 +90,23 @@ exports.create_member = function (request, reply) {
                   return reply.redirect('/');
                 } else {
                   context.message = 'Could not create member.';
-                  return reply.view('member', context);
                 }
               }).error(function (err) {
                 context.message = 'Validation error.';
-                return reply.view('member', context);
               });
             } else {
               context.message = 'Password could not be hashed.';
-              return reply.view('member', context);
             }
           });
         } else {
           context.message = 'Salt could not be generated.';
-          return reply.view('member', context);
         }
       });
     } else {
       context.message = 'Please fill in all required fields.';
-      return reply.view('member', context);
     }
+
+    return reply.view('member', context);
   }
 }
 
