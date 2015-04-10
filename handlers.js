@@ -89,8 +89,12 @@ exports.create_member = function (request, reply) {
                 if (member) {
                   return reply.redirect('/');
                 } else {
-                  return reply(boom.notFound('Could not create member.'));
+                  context.message = 'Could not create member.';
+                  return reply.view('member', context);
                 }
+              }).error(function (err) {
+                context.message = 'Validation error.';
+                return reply.view('member', context);
               });
             } else {
               context.message = 'Password could not be hashed.';
