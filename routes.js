@@ -75,7 +75,7 @@ module.exports = [
       },
       plugins: {
         'hapi-auth-cookie': {
-          redirectTo: '/'
+          redirectTo: false
         }
       }
     }
@@ -90,7 +90,7 @@ module.exports = [
       },
       plugins: {
         'hapi-auth-cookie': {
-          redirectTo: '/'
+          redirectTo: false
         }
       }
     }
