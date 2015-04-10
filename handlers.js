@@ -88,7 +88,7 @@ exports.create_member = function (request, reply) {
           } else {
             return reply(boom.notFound('Could not create member.'));
           }
-        }):
+        });
       });
     });
   } else {
