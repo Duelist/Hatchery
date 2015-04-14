@@ -134,7 +134,7 @@ exports.create_campaign = function (request, reply) {
       member_id: request.auth.credentials.id
     }).then(function (campaign) {
       if (campaign) {
-          redis_client.sadd('campaigns:' + member.id, {
+          redis_client.sadd('campaigns:' + context.member.id, {
           id: campaign.id,
           slug: campaign.slug,
           name: campaign.name
