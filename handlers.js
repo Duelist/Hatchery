@@ -12,7 +12,15 @@ var async = require('async'),
 
 exports.home = function (request, reply) {
   context.member = request.auth.credentials || null;
-  reply.view('index', context);
+
+  if (context.member) {
+    redis_client.smembers('campaigns' + context.member.id, function (err, res) {
+      console.log(res);
+      return reply.view('index', context);
+    });
+  } else {
+    return reply.view('index', context);
+  }
 }
 
 exports.get_login = function (request, reply) {
