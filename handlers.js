@@ -142,11 +142,7 @@ exports.create_campaign = function (request, reply) {
       member_id: request.auth.credentials.id
     }).then(function (campaign) {
       if (campaign) {
-          redis_client.sadd('campaigns:' + context.member.id, {
-          id: campaign.id,
-          slug: campaign.slug,
-          name: campaign.name
-        }, function (err, res) {
+          redis_client.sadd('campaigns:' + context.member.id, campaign.id, function (err, res) {
           return reply.redirect('/');
         });
       } else {
