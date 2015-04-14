@@ -14,9 +14,17 @@ exports.home = function (request, reply) {
   context.member = request.auth.credentials || null;
 
   if (context.member) {
-    redis_client.smembers('campaigns' + context.member.id, function (err, res) {
+    context.member.campaigns = []
+    redis_client.smembers('user_campaigns:' + context.member.id, function (err, res) {
       console.log(res);
-      return reply.view('index', context);
+      async.map(res, function (campaign_id) {
+        return redis_client.hgetall('campaigns:' + campaign_id, function (err, res) {
+          return res;
+        });
+      }, function (results) {
+        context.member.campaigns = results;
+        return reply.view('index', context);
+      });
     });
   } else {
     return reply.view('index', context);
@@ -147,9 +155,9 @@ exports.create_campaign = function (request, reply) {
             name: campaign.name,
             slug: campaign.slug
           }, function (err, res) {
-          redis_client.sadd('user_campaigns:' + context.member.id, campaign.id, function (err, res) {
-            return reply.redirect('/');
-          });
+            redis_client.sadd('user_campaigns:' + context.member.id, campaign.id, function (err, res) {
+              return reply.redirect('/');
+            });
         });
       } else {
         return reply(boom.notFound('Could not create campaign.'));
