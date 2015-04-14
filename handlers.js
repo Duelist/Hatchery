@@ -19,7 +19,7 @@ exports.home = function (request, reply) {
       console.log(res);
       async.map(res, function (campaign_id, callback) {
         redis_client.hgetall('campaigns:' + campaign_id, function (err, res) {
-          callback(null, res);
+          return callback(null, res);
         });
       }, function (results) {
         console.log(results);
