@@ -156,7 +156,13 @@ exports.new_character = function (request, reply) {
     }
   }).then(function (campaign) {
     if (campaign) {
-      return reply.view('character', context);
+      redis_client.sadd('campaigns:' + member.id, {
+        id: campaign.id,
+        slug: campaign.slug,
+        name: campaign.name
+      }, function (err, replies) {
+        return reply.view('character', context);
+      });
     } else {
       return reply(boom.notFound('Could not find campaign.'));
     }
