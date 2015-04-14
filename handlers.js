@@ -17,11 +17,12 @@ exports.home = function (request, reply) {
     context.member.campaigns = []
     redis_client.smembers('user_campaigns:' + context.member.id, function (err, res) {
       console.log(res);
-      async.map(res, function (campaign_id) {
-        return redis_client.hgetall('campaigns:' + campaign_id, function (err, res) {
+      async.map(res, function (campaign_id, callback) {
+        callback(null, redis_client.hgetall('campaigns:' + campaign_id, function (err, res) {
           return res;
-        });
+        }));
       }, function (results) {
+        console.log(results);
         context.member.campaigns = results;
         return reply.view('index', context);
       });
