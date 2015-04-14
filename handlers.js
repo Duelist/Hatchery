@@ -142,8 +142,14 @@ exports.create_campaign = function (request, reply) {
       member_id: request.auth.credentials.id
     }).then(function (campaign) {
       if (campaign) {
-          redis_client.sadd('campaigns:' + context.member.id, campaign.id, function (err, res) {
-          return reply.redirect('/');
+        redis_client.hmset('campaigns:' + campaign.id, {
+            id: campaign.id,
+            name: campaign.name,
+            slug: campaign.slug
+          }, function (err, res) {
+          redis_client.sadd('user_campaigns:' + context.member.id, campaign.id, function (err, res) {
+            return reply.redirect('/');
+          });
         });
       } else {
         return reply(boom.notFound('Could not create campaign.'));
