@@ -134,7 +134,13 @@ exports.create_campaign = function (request, reply) {
       member_id: request.auth.credentials.id
     }).then(function (campaign) {
       if (campaign) {
-        return reply.redirect('/');
+          redis_client.sadd('campaigns:' + member.id, {
+          id: campaign.id,
+          slug: campaign.slug,
+          name: campaign.name
+        }, function (err, res) {
+          return reply.redirect('/');
+        });
       } else {
         return reply(boom.notFound('Could not create campaign.'));
       }
@@ -156,13 +162,7 @@ exports.new_character = function (request, reply) {
     }
   }).then(function (campaign) {
     if (campaign) {
-      redis_client.sadd('campaigns:' + member.id, {
-        id: campaign.id,
-        slug: campaign.slug,
-        name: campaign.name
-      }, function (err, replies) {
-        return reply.view('character', context);
-      });
+      return reply.view('character', context);
     } else {
       return reply(boom.notFound('Could not find campaign.'));
     }
