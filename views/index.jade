@@ -3,6 +3,10 @@ extend base
 block content
   if member
     span Welcome, #{ member.username }
+    ul
+      each campaign in member.campaigns
+        li
+          a(href='/campaigns/' + campaign.slug) #{ campaign.name }
     span #{ member.campaigns }
   else
     a(href="/login") Log In
