@@ -18,8 +18,9 @@ exports.home = function (request, reply) {
     redis_client.smembers('user_campaigns:' + context.member.id, function (err, res) {
       console.log(res);
       async.map(res, function (campaign_id, callback) {
-        redis_client.hgetall('campaigns:' + campaign_id, function (err, res) {
-          return callback(null, res);
+        return redis_client.hgetall('campaigns:' + campaign_id, function (err, res) {
+          console.log(res);
+          callback(null, res);
         });
       }, function (results) {
         console.log(results);
