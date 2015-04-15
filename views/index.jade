@@ -7,6 +7,5 @@ block content
       each campaign in member.campaigns
         li
           a(href='/campaigns/' + campaign.slug) #{ campaign.name }
-    span #{ member.campaigns }
   else
     a(href="/login") Log In
