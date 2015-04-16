@@ -3,6 +3,7 @@
 var hapi = require('hapi'),
     cookie_auth = require('hapi-auth-cookie'),
     slug = require('slug'),
+    react_engine = require('hapi-react')(),
     models = require('./models'),
     server = new hapi.Server();
 
@@ -12,8 +13,11 @@ server.connection({
 });
 
 server.views({
+  defaultExtension: 'jsx',
   engines: {
-    jade: require('jade')
+    jade: require('jade'),
+    jsx: react_engine,
+    js: react_engine
   },
   path: __dirname + '/views'
 });
