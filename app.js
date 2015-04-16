@@ -15,7 +15,6 @@ server.connection({
 server.views({
   defaultExtension: 'jsx',
   engines: {
-    jade: require('jade'),
     jsx: react_engine,
     js: react_engine
   },

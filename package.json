@@ -27,7 +27,6 @@
     "hapi": "^8.4.0",
     "hapi-auth-cookie": "^2.0.0",
     "hapi-react": "^3.0.1",
-    "jade": "^1.9.2",
     "pg": "^4.3.0",
     "pg-hstore": "^2.3.1",
     "react": "^0.13.1",
