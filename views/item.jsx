@@ -8,7 +8,7 @@ var Item = React.createClass({
       <div>
         <div>New Item</div>
         <div>{this.props.message}</div>
-        <ItemForm></ItemForm>
+        <ItemForm {...this.props}></ItemForm>
       </div>
     );
   }
@@ -19,7 +19,7 @@ var ItemForm = React.createClass({
     return (
       <form action={this.props.form_action_url} method='post'>
         <input name='name' type='text' value=''></input>
-        <input name='description' type='textarea' value=''></input>
+        <textarea name='description' value=''></textarea>
         <input type='submit' value='Create Item'></input>
       </form>
     );

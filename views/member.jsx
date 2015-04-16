@@ -8,7 +8,7 @@ var Member = React.createClass({
       <div>
         <div>Sign Up</div>
         <div>{this.props.message}</div>
-        <MemberForm></MemberForm>
+        <MemberForm {...this.props}></MemberForm>
       </div>
     );
   }

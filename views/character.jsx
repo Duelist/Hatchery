@@ -8,7 +8,7 @@ var Character = React.createClass({
       <div>
         <div>New Character</div>
         <div>{this.props.message}</div>
-        <CharacterForm></CharacterForm>
+        <CharacterForm {...this.props}></CharacterForm>
       </div>
     );
   }
@@ -19,7 +19,7 @@ var CharacterForm = React.createClass({
     return (
       <form action={this.props.form_action_url} method='post'>
         <input name='name' type='text' value=''></input>
-        <input name='bio' type='textarea' value=''></input>
+        <textarea name='bio' value=''></textarea>
         <input type='submit' value='Create Character'></input>
       </form>
     );

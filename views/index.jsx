@@ -8,7 +8,7 @@ var Index = React.createClass({
       return (
         <div>
           <div>Welcome, {this.props.member.username}.</div>
-          <CampaignList></CampaignList>
+          <CampaignList {...this.props}></CampaignList>
         </div>
       );
     }
