@@ -16,7 +16,7 @@ var Index = React.createClass({
     return (
       <div>
         <div><a href='/login'>Log In</a></div>
-        <div><a href='/login'>Sign Up</a></div>
+        <div><a href='/member/new'>Sign Up</a></div>
       </div>
     );
   }
