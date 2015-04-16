@@ -24,14 +24,18 @@ var Index = React.createClass({
 
 var CampaignList = React.createClass({
   render: function () {
-    return (
-      <ul>
-        {this.props.member.campaigns.map(function (campaign) {
-          var campaign_link = '/campaigns/' + campaign.slug;
-          return <li><a href={campaign_link}>{campaign.name}</a></li>
-        })}
-      </ul>
-    );
+    if (this.props.member) {
+      return (
+        <ul>
+          {this.props.member.campaigns.map(function (campaign) {
+            var campaign_link = '/campaigns/' + campaign.slug;
+            return <li><a href={campaign_link}>{campaign.name}</a></li>
+          })}
+        </ul>
+      );
+    }
+
+    return null;
   }
 });
 
