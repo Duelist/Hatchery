@@ -32,6 +32,8 @@ exports.home = function (request, reply) {
 }
 
 exports.get_login = function (request, reply) {
+  context.form_action_url = '/login';
+
   if (request.auth.isAuthenticated) {
     return reply.redirect('/');
   } else {
