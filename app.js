@@ -2,10 +2,15 @@
 
 var hapi = require('hapi'),
     cookie_auth = require('hapi-auth-cookie'),
+    redis = require('redis'),
     slug = require('slug'),
     react_engine = require('hapi-react')(),
     models = require('./models'),
-    server = new hapi.Server();
+    server = new hapi.Server(),
+    redis_client = redis.createClient(
+      process.env.REDIS_PORT,
+      process.env.REDIS_IP
+    );
 
 server.connection({
   host: '0.0.0.0',
@@ -48,6 +53,18 @@ server.register(cookie_auth, function (err) {
         slug: slug('Test Campaign').toLowerCase(),
         member_id: member.id
       }).then(function (campaign) {
+
+        redis_client.flushall(function (err, res) {
+          redis_client.hmset('campaigns:' + campaign.id, {
+              id: campaign.id,
+              name: campaign.name,
+              slug: campaign.slug
+            }, function (err, res) {
+              redis_client.sadd('user_campaigns:' + member.id, campaign.id);
+            }
+          );
+        });
+
         models.character.create({
           name: 'Test Character',
           bio: 'I am a test.',

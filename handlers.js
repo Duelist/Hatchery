@@ -160,7 +160,8 @@ exports.create_campaign = function (request, reply) {
             redis_client.sadd('user_campaigns:' + context.member.id, campaign.id, function (err, res) {
               return reply.redirect('/');
             });
-        });
+          }
+        );
       } else {
         return reply(boom.notFound('Could not create campaign.'));
       }
