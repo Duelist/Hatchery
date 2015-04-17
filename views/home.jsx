@@ -7,7 +7,7 @@ var Home = React.createClass({
     return (
       <html>
         <head></head>
-        <body style='background-color: #A5DE37'>
+        <body style={{backgroundColor: '#A5DE37', color: '#FFFFFF'}}>
           <div>
             <div><a href='/login'>Log In</a></div>
             <div><a href='/member/new'>Sign Up</a></div>
