@@ -13,6 +13,9 @@ var async = require('async'),
 exports.home = function (request, reply) {
   context.member = request.auth.credentials || null;
 
+  return reply.view('home', context);
+
+  /*
   if (context.member) {
     context.member.campaigns = []
 
@@ -29,6 +32,7 @@ exports.home = function (request, reply) {
   } else {
     return reply.view('index', context);
   }
+  */
 }
 
 exports.get_login = function (request, reply) {
