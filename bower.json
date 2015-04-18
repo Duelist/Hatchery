@@ -6,7 +6,6 @@
     "Ian Benedict <ianbenedict@gmail.com>"
   ],
   "license": "MIT",
-  "private": true,
   "ignore": [
     "**/.*",
     "node_modules",
@@ -14,5 +13,9 @@
     "app/bower_components",
     "test",
     "tests"
+  ],
+  "main": "app.js",
+  "moduleType": [
+    "node"
   ]
 }

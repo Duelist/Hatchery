@@ -7,50 +7,17 @@ var Home = React.createClass({
     return (
       <html style={{height: '100%'}}>
         <head></head>
-        <body style={{
-          backgroundColor: '#FF4351',
-          fontFamily: 'Helvetica Neue',
-          color: '#FFFFFF',
-          width: '100%',
-          height: '100%',
-          display: 'table',
-          margin: '0px'
-        }}>
+        <body>
           <div style={{display: 'table-header-group'}}>
-            <a href='/login' style={{
-              fontSize: '30px',
-              width: '150px',
-              height: '60px',
-              display: 'table',
-              border: '2px solid #FFFFFF',
-              borderRadius: '8px',
-              marginTop: '30px',
-              marginLeft: 'auto',
-              marginRight: '30px',
-              color: '#FFFFFF',
-              textDecoration: 'none',
-              textAlign: 'center'
-            }}>
-              <div style={{display: 'table-cell', verticalAlign: 'middle'}}>Log In</div>
+            <a href='/login' class='outer-button'>
+              <div class='inner-button'>Log In</div>
             </a>
           </div>
           <div style={{display: 'table-cell', verticalAlign: 'middle'}}>
-            <div style={{textAlign: 'center', fontSize: '48px', paddingBottom: '40px'}}>Your new campaign manager.</div>
+            <div class='title'>Your new campaign manager.</div>
             <div>
-              <a href='/member/new' style={{
-                fontSize: '30px',
-                width: '150px',
-                height: '60px',
-                display: 'table',
-                border: '2px solid #ffffff',
-                borderRadius: '8px',
-                marginLeft: 'auto',
-                marginRight: 'auto',
-                color: '#ffffff',
-                textDecoration: 'none',
-                textAlign: 'center'
-              }}>
-                <div style={{display: 'table-cell', verticalAlign: 'middle'}}>
+              <a href='/member/new' class='outer-button'>
+                <div class='inner-button'>
                   Sign Up
                 </div>
               </a>

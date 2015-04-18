@@ -1,4 +1,16 @@
-var gulp = require('gulp');
+var gulp = require('gulp'),
+    sass = require('gulp-sass'),
+    minifycss = require('gulp-minify-css');
 
-gulp.task('default', function() {
+gulp.task('default', ['sass']);
+
+gulp.task('clean', function () {
+
+});
+
+gulp.task('sass', function () {
+  gulp.src('./private/scss/*.scss')
+      .pipe(sass())
+      .pipe(minifycss())
+      .pipe(gulp.dest('./public/css'));
 });
