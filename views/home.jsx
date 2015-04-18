@@ -8,7 +8,7 @@ var Home = React.createClass({
       <html style={{height: '100%'}}>
         <head></head>
         <body style={{
-          backgroundColor: '#A5DE37',
+          backgroundColor: '#FF4351',
           fontFamily: 'Helvetica Neue',
           color: '#FFFFFF',
           width: '100%',
