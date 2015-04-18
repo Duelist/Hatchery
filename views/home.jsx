@@ -7,7 +7,7 @@ var Home = React.createClass({
     return (
       <html style={{height: '100%'}}>
         <head>
-          <link rel='stylesheet' type='text/css' href='/static/home.css'>
+          <link rel='stylesheet' type='text/css' href='/static/home.css'></link>
         </head>
         <body>
           <div style={{display: 'table-header-group'}}>
