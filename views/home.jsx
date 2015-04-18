@@ -21,7 +21,7 @@ var Home = React.createClass({
               fontSize: '30px',
               width: '150px',
               height: '60px',
-              display: 'table'
+              display: 'table',
               border: '2px solid #FFFFFF',
               borderRadius: '8px',
               marginTop: '30px',
