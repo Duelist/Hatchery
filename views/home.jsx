@@ -12,27 +12,29 @@ var Home = React.createClass({
           fontFamily: 'Helvetica Neue',
           color: '#FFFFFF',
           width: '100%',
-          height: '100%'
+          height: '100%',
+          display: 'table'
         }}>
-          <div style={{display: 'table'}}>
-            <div style={{display: 'table-cell', verticalAlign: 'middle'}}>
-              <div style={{fontSize: '48px', paddingBottom: '40px'}}>Your new campaign manager.</div>
-              <div>
-                <a href='/member/new' style={{
-                  fontSize: '30px',
-                  width: '150px',
-                  height: '60px',
-                  display: 'table',
-                  border: '2px solid #ffffff',
-                  borderRadius: '8px',
-                  marginLeft: 'auto',
-                  marginRight: 'auto'
-                }}>
-                  <div style={{display: 'table-cell', verticalAlign: 'middle'}}>
-                    Sign Up
-                  </div>
-                </a>
-              </div>
+          <div style={{display: 'table-cell', verticalAlign: 'middle'}}>
+            <div style={{textAlign: 'center', fontSize: '48px', paddingBottom: '40px'}}>Your new campaign manager.</div>
+            <div>
+              <a href='/member/new' style={{
+                fontSize: '30px',
+                width: '150px',
+                height: '60px',
+                display: 'table',
+                border: '2px solid #ffffff',
+                borderRadius: '8px',
+                marginLeft: 'auto',
+                marginRight: 'auto',
+                color: '#ffffff',
+                textDecoration: 'none',
+                textAlign: 'center'
+              }}>
+                <div style={{display: 'table-cell', verticalAlign: 'middle'}}>
+                  Sign Up
+                </div>
+              </a>
             </div>
           </div>
         </body>
