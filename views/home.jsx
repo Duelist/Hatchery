@@ -6,7 +6,9 @@ var Home = React.createClass({
   render: function() {
     return (
       <html style={{height: '100%'}}>
-        <head></head>
+        <head>
+          <link href='/static/home.css'></link>
+        </head>
         <body>
           <div style={{display: 'table-header-group'}}>
             <a href='/login' className={'outer-button'}>

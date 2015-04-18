@@ -3,6 +3,15 @@ var handlers = require('./handlers');
 module.exports = [
   {
     method: 'GET',
+    path: '/static/{param*}',
+    handler: {
+        directory: {
+            path: 'public'
+        }
+    }
+  },
+  {
+    method: 'GET',
     path: '/',
     handler: handlers.home,
     config: {
