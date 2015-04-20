@@ -22,6 +22,12 @@ a.outer-button {
   text-align: center;
 }
 
+a.outer-button:hover {
+  background-color: #FFFFFF;
+  color: $primary;
+  transition: 0.5s;
+}
+
 div.inner-button {
   display: table-cell;
   vertical-align: middle;
