@@ -11,14 +11,14 @@ var Home = React.createClass({
         </head>
         <body>
           <div style={{display: 'table-header-group'}}>
-            <a href='/login' className={'outer-button'}>
+            <a href='/login' className={'outer-button nav'}>
               <div className={'inner-button'}>Log In</div>
             </a>
           </div>
           <div style={{display: 'table-cell', verticalAlign: 'middle'}}>
             <div className={'title'}>Your new campaign manager.</div>
             <div>
-              <a href='/member/new' className={'outer-button'}>
+              <a href='/member/new' className={'outer-button sub-title'}>
                 <div className={'inner-button'}>
                   Sign Up
                 </div>
