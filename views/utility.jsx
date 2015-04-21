@@ -1,11 +1,11 @@
 /** @jsx React.DOM */
 
-var React = require('react');
+var React = require('react'),
+    cx = require('classnames');
 
 var Button = React.createClass({
   render: function() {
-    var cx = React.addons.classSet,
-        classes = cx(
+    var classes = cx(
           'outer-button',
           this.props.className
         );
