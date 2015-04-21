@@ -1,6 +1,9 @@
 /** @jsx React.DOM */
 
-var React = require('react');
+var React = require('react'),
+    utility = require('utility'),
+    Button = utility.button;
+
 
 var Home = React.createClass({
   render: function() {
@@ -11,9 +14,7 @@ var Home = React.createClass({
         </head>
         <body>
           <div style={{display: 'table-header-group'}}>
-            <a href='/login' className={'outer-button nav'}>
-              <div className={'inner-button'}>Log In</div>
-            </a>
+            <Button href='/login' className={'nav'}>Log In</Button>
           </div>
           <div style={{display: 'table-cell', verticalAlign: 'middle'}}>
             <div className={'title'}>Your new campaign manager.</div>
