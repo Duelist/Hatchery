@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 var React = require('react'),
-    utility = require('utility'),
+    utility = require('./utility'),
     Button = utility.button;
 
 
