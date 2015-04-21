@@ -14,7 +14,7 @@ var Home = React.createClass({
         </head>
         <body>
           <div style={{display: 'table-header-group'}}>
-            <Button href='/login' className={'nav'}>Log In</Button>
+            <Button href='/login' className={'nav'} value='Log In'></Button>
           </div>
           <div style={{display: 'table-cell', verticalAlign: 'middle'}}>
             <div className={'title'}>Your new campaign manager.</div>
