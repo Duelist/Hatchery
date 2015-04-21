@@ -6,7 +6,7 @@ var Button = React.createClass({
   render: function() {
     return (
       <a href={this.props.href} className={'outer-button'}>
-        <div className={'inner-button'}></div>
+        <div className={'inner-button'}>{this.props.value}</div>
       </a>
     );
   }
