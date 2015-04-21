@@ -19,11 +19,7 @@ var Home = React.createClass({
           <div style={{display: 'table-cell', verticalAlign: 'middle'}}>
             <div className={'title'}>Your new campaign manager.</div>
             <div>
-              <a href='/member/new' className={'outer-button sub-title'}>
-                <div className={'inner-button'}>
-                  Sign Up
-                </div>
-              </a>
+              <Button href='/member/new' className={'sub-title'} value='Sign Up'></Button>
             </div>
           </div>
         </body>
