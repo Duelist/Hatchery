@@ -20,8 +20,12 @@ var Button = React.createClass({
 
 var Window = React.createClass({
   render: function() {
+    var classes = cx('window');
+
     return (
-      <div>
+      <div className={classes}>
+        <div className={'window-title'}>{this.props.title}</div>
+        <div className={'window-content'}>{this.props.value}</div>
       </div>
     );
   }
