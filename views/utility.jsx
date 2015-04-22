@@ -6,7 +6,7 @@ var React = require('react'),
 var Button = React.createClass({
   render: function() {
     var classes = cx(
-          'outer-button',
+          'button',
           this.props.className
         );
 
@@ -14,6 +14,15 @@ var Button = React.createClass({
       <a href={this.props.href} className={classes}>
         <div className={'inner-button'}>{this.props.value}</div>
       </a>
+    );
+  }
+});
+
+var Window = React.createClass({
+  render: function() {
+    return (
+      <div>
+      </div>
     );
   }
 });

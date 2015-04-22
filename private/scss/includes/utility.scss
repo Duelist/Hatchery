@@ -1,9 +1,7 @@
 @import 'settings';
 
-a.outer-button {
+a.button {
   font-size: 30px;
-  width: 150px;
-  height: 60px;
   display: table;
   border: 2px solid #FFFFFF;
   border-radius: 8px;
@@ -12,13 +10,17 @@ a.outer-button {
   text-align: center;
 }
 
-a.outer-button:hover {
+a.button:hover {
   background-color: #FFFFFF;
   color: $primary;
-  transition: 0.5s;
+  transition: 0.3s;
 }
 
 div.inner-button {
   display: table-cell;
   vertical-align: middle;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
