@@ -36,6 +36,12 @@ exports.home = function (request, reply) {
   */
 }
 
+exports.dashboard = function (request, reply) {
+  context.member = request.auth.credentials || null;
+
+  return reply.view('dashboard', context);
+}
+
 exports.get_login = function (request, reply) {
   context.form_action_url = '/login';
 

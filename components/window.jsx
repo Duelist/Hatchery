@@ -5,7 +5,10 @@ var React = require('react'),
 
 var Window = React.createClass({
   render: function() {
-    var classes = cx('window');
+    var classes = cx(
+      'window',
+      this.props.className
+    );
 
     return (
       <div className={classes}>

@@ -27,6 +27,21 @@ module.exports = [
     }
   },
   {
+    method: 'GET',
+    path: '/dashboard',
+    handler: handlers.dashboard,
+    config: {
+      auth: {
+        strategy: 'session'
+      },
+      plugins: {
+        'hapi-auth-cookie': {
+          redirectTo: false
+        }
+      }
+    }
+  },
+  {
     method: ['GET'],
     path: '/login',
     handler: handlers.get_login,
