@@ -11,8 +11,8 @@ nconf.defaults({
   sql_protocol: 'postgres',
   sql_port: 5432,
   sql_ssl_enabled: true,
-  redis_host: '0.0.0.0',
-  redis_port: process.env.REDIS_PORT 
+  redis_host: process.env.REDIS_IP,
+  redis_port: process.env.REDIS_PORT
 });
 
 module.exports = nconf;

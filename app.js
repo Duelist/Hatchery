@@ -10,7 +10,7 @@ var hapi = require('hapi'),
     server = new hapi.Server(),
     redis_client = redis.createClient(
       conf.get('redis_port'),
-      conf.get('redis_ip')
+      conf.get('redis_host')
     );
 
 server.connection({
