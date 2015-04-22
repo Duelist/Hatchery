@@ -6,15 +6,16 @@ var hapi = require('hapi'),
     slug = require('slug'),
     react_engine = require('hapi-react')(),
     models = require('./models'),
+    conf = require('./conf'),
     server = new hapi.Server(),
     redis_client = redis.createClient(
-      process.env.REDIS_PORT,
-      process.env.REDIS_IP
+      conf.get('redis_port'),
+      conf.get('redis_ip')
     );
 
 server.connection({
-  host: '0.0.0.0',
-  port: +process.env.PORT || 3000
+  host: conf.get('host'),
+  port: conf.get('port')
 });
 
 server.views({

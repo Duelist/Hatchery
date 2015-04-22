@@ -4,10 +4,11 @@ var async = require('async'),
     redis = require('redis'),
     slug = require('slug'),
     models = require('./models'),
+    conf = require('./conf'),
     context = {},
     redis_client = redis.createClient(
-      process.env.REDIS_PORT,
-      process.env.REDIS_IP
+      conf.get('redis_port'),
+      conf.get('redis_host')
     );
 
 exports.home = function (request, reply) {

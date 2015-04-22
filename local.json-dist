@@ -1,0 +1,10 @@
+{
+  "env": "development",
+  "host": <web_host>,
+  "port": <web_port>,
+  "sql_url": <sql_url>,
+  "sql_port": <sql_port>,
+  "sql_ssl_enabled": false,
+  "redis_host": <redis_host>,
+  "redis_port": <redis_port>
+}
