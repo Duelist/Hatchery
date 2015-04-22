@@ -1,9 +1,7 @@
 /** @jsx React.DOM */
 
 var React = require('react'),
-    utility = require('./utility'),
-    Button = utility.button;
-
+    Button = require('../components/button');
 
 var Home = React.createClass({
   render: function() {
