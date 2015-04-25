@@ -4,7 +4,7 @@ var hapi = require('hapi'),
     cookie_auth = require('hapi-auth-cookie'),
     redis = require('redis'),
     slug = require('slug'),
-    react_engine = require('hapi-react')(),
+    handlebars = require('handlebars'),
     models = require('./models'),
     conf = require('./conf'),
     server = new hapi.Server(),
@@ -18,6 +18,7 @@ server.connection({
   port: conf.get('port')
 });
 
+/*
 server.views({
   defaultExtension: 'jsx',
   engines: {
@@ -26,7 +27,33 @@ server.views({
   },
   path: __dirname + '/views'
 });
+*/
 
+server.views({
+  defaultExtension: 'html',
+  engines: {
+    html: handlebars
+  }
+});
+
+
+var io = require('socket.io')(server.listener);
+
+io.on('connection', function (socket) {
+  socket.emit('Welcome');
+  socket.on('test', function () {
+      socket.emit('Test worked!');
+  });
+  socket.on('get-blog-posts', function (data) {
+    models.blog_post.findAll({
+      where: {
+        blog_id: data.blog_id
+      }
+    }).then(function (blog_posts) {
+      socket.emit('blog-posts', blog_posts);
+    });
+  });
+});
 
 /* Server start */
 
