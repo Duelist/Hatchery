@@ -32,6 +32,7 @@ module.exports = [
     handler: handlers.dashboard,
     config: {
       auth: {
+        mode: 'try',
         strategy: 'session'
       },
       plugins: {

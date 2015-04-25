@@ -11,7 +11,6 @@ var Dashboard = React.createClass({
   }
 });
 
-// module.exports = Dashboard;
 React.render(
   <Dashboard></Dashboard>,
   document.getElementById('content')

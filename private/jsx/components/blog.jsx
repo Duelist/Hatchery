@@ -17,7 +17,6 @@ var Blog = React.createClass({
     this.socket = io('http://localhost:3000/');
 
     this.socket.on('blog-posts', function (posts) {
-      console.log(posts);
       that.setState({
         blog_id: that.state.blog_id,
         posts: posts
