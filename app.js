@@ -18,17 +18,6 @@ server.connection({
   port: conf.get('port')
 });
 
-/*
-server.views({
-  defaultExtension: 'jsx',
-  engines: {
-    jsx: react_engine,
-    js: react_engine
-  },
-  path: __dirname + '/views'
-});
-*/
-
 server.views({
   defaultExtension: 'html',
   engines: {

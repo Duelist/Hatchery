@@ -15,25 +15,6 @@ exports.home = function (request, reply) {
   context.member = request.auth.credentials || null;
 
   return reply.view('home', context);
-
-  /*
-  if (context.member) {
-    context.member.campaigns = []
-
-    redis_client.smembers('user_campaigns:' + context.member.id, function (err, res) {
-      async.map(res, function (campaign_id, callback) {
-        redis_client.hgetall('campaigns:' + campaign_id, function (err, res) {
-          callback(null, res);
-        });
-      }, function (err, results) {
-        context.member.campaigns = results;
-        return reply.view('index', context);
-      });
-    });
-  } else {
-    return reply.view('index', context);
-  }
-  */
 }
 
 exports.dashboard = function (request, reply) {
