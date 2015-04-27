@@ -33,7 +33,8 @@ server.views({
   defaultExtension: 'html',
   engines: {
     html: handlebars
-  }
+  },
+  path: __dirname + '/views'
 });
 
 
