@@ -26769,7 +26769,6 @@ var Blog = React.createClass({displayName: "Blog",
     this.socket = io('http://localhost:3000/');
 
     this.socket.on('blog-posts', function (posts) {
-      console.log(posts);
       that.setState({
         blog_id: that.state.blog_id,
         posts: posts
@@ -26819,7 +26818,7 @@ var BlogPost = React.createClass({displayName: "BlogPost",
     );
 
     return (
-      React.createElement(Window, {title: this.props.title, content: this.props.body})
+      React.createElement(Window, {title: this.props.title, body: this.props.body})
     );
   }
 });
@@ -26843,7 +26842,7 @@ var Window = React.createClass({displayName: "Window",
     return (
       React.createElement("div", {className: classes}, 
         React.createElement("div", {className: 'window-title'}, this.props.title), 
-        React.createElement("div", {className: 'window-content'}, this.props.value)
+        React.createElement("div", {className: 'window-content'}, this.props.body)
       )
     );
   }
@@ -26866,7 +26865,6 @@ var Dashboard = React.createClass({displayName: "Dashboard",
   }
 });
 
-// module.exports = Dashboard;
 React.render(
   React.createElement(Dashboard, null),
   document.getElementById('content')

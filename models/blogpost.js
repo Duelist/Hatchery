@@ -9,7 +9,12 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false
     },
-    slug: DataTypes.STRING
+    slug: DataTypes.STRING,
+    is_active: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true
+    }
   }, {
     classMethods: {
       associate: function(models) {

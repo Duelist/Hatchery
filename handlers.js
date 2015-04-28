@@ -23,7 +23,7 @@ exports.dashboard = function (request, reply) {
   return reply.view('dashboard', context);
 }
 
-exports.get_login = function (request, reply) {
+exports.login = function (request, reply) {
   context.form_action_url = '/login';
 
   if (request.auth.isAuthenticated) {

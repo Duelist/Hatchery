@@ -45,7 +45,7 @@ module.exports = [
   {
     method: ['GET'],
     path: '/login',
-    handler: handlers.get_login,
+    handler: handlers.login,
     config: {
       auth: {
         mode: 'try',

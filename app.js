@@ -30,10 +30,6 @@ server.views({
 var io = require('socket.io')(server.listener);
 
 io.on('connection', function (socket) {
-  socket.emit('Welcome');
-  socket.on('test', function () {
-      socket.emit('Test worked!');
-  });
   socket.on('get-blog-posts', function (data) {
     models.blog_post.findAll({
       where: {
@@ -42,6 +38,10 @@ io.on('connection', function (socket) {
     }).then(function (blog_posts) {
       socket.emit('blog-posts', blog_posts);
     });
+  });
+
+  socket.on('get-campaign-players', function (data) {
+    models.member.findAll();
   });
 });
 
