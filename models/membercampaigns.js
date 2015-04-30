@@ -1,7 +1,10 @@
 "use strict";
 module.exports = function(sequelize, DataTypes) {
-  var Blog = sequelize.define("blog", {
-    name: DataTypes.STRING
+  var MemberCampaigns = sequelize.define("member_campaigns", {
+    is_dm: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
+    }
   }, {
     classMethods: {
       associate: function(models) {
@@ -9,5 +12,5 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   });
-  return Blog;
+  return MemberCampaigns;
 };

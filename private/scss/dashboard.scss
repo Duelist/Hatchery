@@ -6,3 +6,34 @@ body {
   color: #FFFFFF;
   margin: 0px;
 }
+
+div.blog {
+  width: 60%;
+  margin-right: 45px;
+}
+
+div.campaign-players {
+  width: 40%;
+}
+
+div.blog-post {
+  margin-bottom: 30px;
+}
+
+.blog-animation-enter {
+  opacity: 0.01;
+  transition: opacity .5s ease-in;
+}
+
+.blog-animation-enter.blog-animation-enter-active {
+  opacity: 1;
+}
+
+.blog-animation-leave {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
+
+.blog-animation-leave.blog-animation-leave-active {
+  opacity: 0.01;
+}

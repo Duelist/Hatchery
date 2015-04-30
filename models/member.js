@@ -27,14 +27,7 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        var MemberCampaigns = sequelize.define('member_campaigns', {
-          is_dm: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false
-          }
-        });
-
-        Member.belongsToMany(models.campaign, { through: MemberCampaigns });
+        Member.belongsToMany(models.campaign, { through: models.member_campaigns });
         Member.hasMany(models.message, { as: 'messages_sent' });
         Member.hasMany(models.message, { as: 'messages_received' });
       }

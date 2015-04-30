@@ -34,14 +34,23 @@ io.on('connection', function (socket) {
     models.blog_post.findAll({
       where: {
         blog_id: data.blog_id
-      }
+      },
+      order: 'created_at DESC'
     }).then(function (blog_posts) {
-      socket.emit('blog-posts', blog_posts);
+      io.emit('blog-posts', blog_posts);
     });
   });
 
   socket.on('get-campaign-players', function (data) {
-    models.member.findAll();
+    models.campaign.findOne({
+      where: {
+        id: data.campaign_id
+      }
+    }).then(function (campaign) {
+      campaign.getPlayers().then(function (players) {
+        io.emit('campaign-players', players);
+      });
+    });
   });
 });
 
@@ -69,7 +78,7 @@ server.register(cookie_auth, function (err) {
         name: 'Test Campaign',
         description: 'This is a test campaign.',
         slug: slug('Test Campaign').toLowerCase(),
-        member_id: member.id
+        owner_id: member.id
       }).then(function (campaign) {
 
         redis_client.flushall(function (err, res) {
@@ -81,6 +90,12 @@ server.register(cookie_auth, function (err) {
               redis_client.sadd('user_campaigns:' + member.id, campaign.id);
             }
           );
+        });
+
+        models.member_campaigns.create({
+          campaign_id: campaign.id,
+          member_id: member.id,
+          is_dm: true
         });
 
         models.character.create({

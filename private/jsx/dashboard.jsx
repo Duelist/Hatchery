@@ -1,12 +1,16 @@
 /** @jsx React.DOM */
 
 var React = require('react'),
-    Blog = require('./components/blog');
+    Blog = require('./components/blog'),
+    CampaignPlayers = require('./components/campaign_players');
 
 var Dashboard = React.createClass({
   render: function() {
     return (
-      <Blog></Blog>
+      <div style={{ padding: '45px', display: 'flex', flexDirection: 'row' }}>
+        <Blog></Blog>
+        <CampaignPlayers></CampaignPlayers>
+      </div>
     );
   }
 });

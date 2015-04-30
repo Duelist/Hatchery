@@ -1,13 +1,10 @@
 var gulp = require('gulp'),
     sass = require('gulp-sass'),
     minifycss = require('gulp-minify-css'),
+    uglify = require('gulp-uglify'),
     browserify = require('gulp-browserify');
 
-gulp.task('build', ['sass']);
-
-gulp.task('clean', function () {
-
-});
+gulp.task('default', ['sass', 'react']);
 
 gulp.task('sass', function () {
   gulp.src('./private/scss/*.scss')
@@ -22,5 +19,6 @@ gulp.task('react', function () {
         extensions: ['.jsx'],
         transform: ['reactify']
       }))
+      .pipe(uglify())
       .pipe(gulp.dest('./public/jsx'));
 });

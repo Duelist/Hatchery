@@ -211,5 +211,21 @@ module.exports = [
         }
       }
     }
+  },
+  {
+    method: ['POST'],
+    path: '/campaign/{campaign_slug}/blog_post',
+    handler: handlers.create_blog_post,
+    config: {
+      auth: {
+        mode: 'try',
+        strategy: 'session'
+      },
+      plugins: {
+        'hapi-auth-cookie': {
+          redirectTo: false
+        }
+      }
+    }
   }
 ]

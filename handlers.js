@@ -1,6 +1,7 @@
 var async = require('async'),
     bcrypt = require('bcrypt'),
     boom = require('boom'),
+    io = require('socket.io-client'),
     redis = require('redis'),
     slug = require('slug'),
     models = require('./models'),
@@ -11,17 +12,19 @@ var async = require('async'),
       conf.get('redis_host')
     );
 
+var client = io.connect('http://localhost:3000/');
+
 exports.home = function (request, reply) {
   context.member = request.auth.credentials || null;
 
   return reply.view('home', context);
-}
+};
 
 exports.dashboard = function (request, reply) {
   context.member = request.auth.credentials || null;
 
   return reply.view('dashboard', context);
-}
+};
 
 exports.login = function (request, reply) {
   context.form_action_url = '/login';
@@ -31,7 +34,7 @@ exports.login = function (request, reply) {
   } else {
     return reply.view('login', context);
   }
-}
+};
 
 exports.post_login = function (request, reply) {
   if (request.auth.isAuthenticated) {
@@ -56,19 +59,19 @@ exports.post_login = function (request, reply) {
             context.message = 'Invalid username or password.';
             return reply.view('login', context);
           }
-        })
+        });
       } else {
         context.message = 'Invalid username or password.';
         return reply.view('login', context);
       }
     });
   }
-}
+};
 
 exports.logout = function (request, reply) {
   request.auth.session.clear();
   reply.redirect('/');
-}
+};
 
 exports.new_member = function (request, reply) {
   context.member = request.auth.credentials || null;
@@ -76,7 +79,7 @@ exports.new_member = function (request, reply) {
   context.message = '';
 
   return reply.view('member', context);
-}
+};
 
 exports.create_member = function (request, reply) {
   context.member = request.auth.credentials || null;
@@ -121,7 +124,7 @@ exports.create_member = function (request, reply) {
       return reply.view('member', context);
     }
   }
-}
+};
 
 exports.new_campaign = function (request, reply) {
   context.member = request.auth.credentials || null;
@@ -129,7 +132,7 @@ exports.new_campaign = function (request, reply) {
   context.message = '';
 
   return reply.view('campaign', context);
-}
+};
 
 exports.create_campaign = function (request, reply) {
   context.member = request.auth.credentials || null;
@@ -162,7 +165,7 @@ exports.create_campaign = function (request, reply) {
     context.message = 'Please enter a campaign name.';
     return reply.view('campaign', context);
   }
-}
+};
 
 exports.new_character = function (request, reply) {
   context.member = request.auth.credentials || null;
@@ -180,7 +183,7 @@ exports.new_character = function (request, reply) {
       return reply(boom.notFound('Could not find campaign.'));
     }
   });
-}
+};
 
 exports.create_character = function (request, reply) {
   context.member = request.auth.credentials || null;
@@ -215,7 +218,7 @@ exports.create_character = function (request, reply) {
       return reply(boom.notFound('Could not find campaign.'));
     }
   });
-}
+};
 
 exports.new_item = function (request, reply) {
   context.member = request.auth.credentials || null;
@@ -233,7 +236,7 @@ exports.new_item = function (request, reply) {
       return reply(boom.notFound('Could not find campaign.'));
     }
   });
-}
+};
 
 exports.create_item = function (request, reply) {
   context.member = request.auth.credentials || null;
@@ -264,7 +267,45 @@ exports.create_item = function (request, reply) {
         return reply.view('item', context);
       }
     } else {
-      return reply(boom.notFound('Could not find item.'));
+      return reply(boom.notFound('Could not find campaign.'));
     }
   });
-}
+};
+
+exports.create_blog_post = function (request, reply) {
+  context.member = request.auth.credentials || null;
+  context.form_action_url = '/campaign/' + request.params.campaign_slug + '/blog_post';
+  context.message = '';
+
+  models.campaign.findOne({
+    where: {
+      slug: request.params.campaign_slug
+    }
+  }).then(function (campaign) {
+    if (campaign) {
+      if (request.payload.title) {
+        campaign.getBlog().then(function (blog) {
+          if (blog) {
+            models.blog_post.create({
+              title: request.payload.title,
+              body: request.payload.body,
+              slug: slug(request.payload.title).toLowerCase(),
+              blog_id: blog.id
+            }).then(function (post) {
+              if (post) {
+                client.emit('get-blog-posts', { blog_id: blog.id });
+                return reply();
+              } else {
+                return reply(boom.badRequest('Could not create post.'));
+              }
+            });
+          } else {
+            return reply(boom.badRequest('Could not find blog.'));
+          }
+        });
+      }
+    } else {
+      return reply(boom.notFound('Could not find campaign.'));
+    };
+  });
+};

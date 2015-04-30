@@ -1,9 +1,11 @@
 /** @jsx React.DOM */
 
-var React = require('react'),
+var React = require('react/addons'),
     io = require('socket.io-client'),
     cx = require('classnames'),
+    ReactCSSTransitionGroup = React.addons.CSSTransitionGroup,
     BlogPost = require('./blog_post');
+
 
 var Blog = React.createClass({
   getInitialState: function() {
@@ -36,13 +38,15 @@ var Blog = React.createClass({
     var posts = (<div>Loading blog posts...</div>);
     if (this.state.posts) {
       posts = this.state.posts.map(function (post) {
-        return (<BlogPost title={post.title} body={post.body}></BlogPost>);
+        return (<BlogPost key={post.id} title={post.title} body={post.body}></BlogPost>);
       });
     }
 
     return (
       <div className={classes}>
-        {posts}
+        <ReactCSSTransitionGroup transitionName='blog-animation'>
+          {posts}
+        </ReactCSSTransitionGroup>
       </div>
     );
   }

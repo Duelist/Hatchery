@@ -12,7 +12,7 @@ var Window = React.createClass({
 
     return (
       <div className={classes}>
-        <div className={'window-title'}>{this.props.title}</div>
+        {!!this.props.title && <div className={'window-title'}>{this.props.title}</div>}
         <div className={'window-content'}>{this.props.body}</div>
       </div>
     );

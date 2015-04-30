@@ -12,7 +12,7 @@ var BlogPost = React.createClass({
     );
 
     return (
-      <Window title={this.props.title} body={this.props.body}></Window>
+      <Window className={classes} title={this.props.title} body={this.props.body}></Window>
     );
   }
 });
