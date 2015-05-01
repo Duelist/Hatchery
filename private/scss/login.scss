@@ -1,0 +1,30 @@
+@import 'includes/utility';
+
+div.login input {
+  background: transparent;
+  border: 2px solid #FFF;
+  border-radius: 8px;
+  color: #FFFFFF;
+  font-size: 24pt;
+  padding: 10px;
+}
+
+div.login input:focus {
+  outline: none;
+}
+
+div.login input::-webkit-input-placeholder {
+  color: #FFFFFF;
+}
+
+div.login input:-moz-placeholder { /* Firefox 18- */
+  color: #FFFFFF;
+}
+
+div.login input::-moz-placeholder {  /* Firefox 19+ */
+  color: #FFFFFF;
+}
+
+div.login input:-ms-input-placeholder {  
+  color: #FFFFFF;
+}

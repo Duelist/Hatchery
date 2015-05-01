@@ -36,7 +36,7 @@ var CampaignPlayers = React.createClass({
     var players = (<div>Loading campaign players...</div>);
     if (this.state.players) {
       players = this.state.players.map(function (player) {
-        return (<div key={player.id}>{player.username}</div>);
+        return (<div key={player.id}>{!!player.member_campaigns.is_dm && 'DM '}{player.username}</div>);
       });
     }
 

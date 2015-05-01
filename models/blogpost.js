@@ -6,7 +6,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     body: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(4096),
       allowNull: false
     },
     slug: DataTypes.STRING,

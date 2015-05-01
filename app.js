@@ -124,7 +124,11 @@ server.register(cookie_auth, function (err) {
         }).then(function (blog) {
           models.blog_post.create({
             title: 'Test Post',
-            body: 'This is a test blog post.',
+            body: [
+              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras at felis quam. Vivamus quis dui a dui facilisis blandit eget et nunc. Donec posuere, augue vel tempor cursus, orci mi placerat lorem, non tempor ante lacus id diam. Praesent ac neque eu lectus congue scelerisque. Integer eros odio, feugiat a metus eget, tincidunt semper diam. Donec quis hendrerit nisl. Sed ac ipsum mi. Ut dapibus, turpis vel maximus euismod, purus quam auctor enim, vitae sagittis ante urna in diam. Maecenas gravida metus nulla, eget hendrerit dolor rutrum at.',
+              'Proin imperdiet, lectus vitae commodo iaculis, enim leo vestibulum lacus, ut lacinia nulla libero eu felis. Maecenas eleifend dui non libero efficitur, at condimentum mi rhoncus. Nunc tincidunt arcu nisl, ut ullamcorper justo consectetur sit amet. Aliquam erat volutpat. Donec non quam enim. Curabitur ornare fringilla dui eu vestibulum. Maecenas quis semper elit.',
+              'Aenean pulvinar ante a nibh condimentum tristique. Mauris tempus porta libero, quis tincidunt eros faucibus id. Fusce venenatis, ex sed consectetur laoreet, nibh libero aliquet ipsum, a laoreet augue neque in nisl. Etiam ipsum eros, auctor vitae venenatis eu, efficitur ut nulla. Cras condimentum lacus turpis, vitae pharetra tortor molestie ut. Vivamus in ullamcorper ex, quis porttitor nisl. Maecenas sit amet lorem in massa tempus egestas. Donec ullamcorper pellentesque dolor, non laoreet tortor. Proin viverra mi eu imperdiet ullamcorper. In hac habitasse platea dictumst. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.'
+            ].join('\n'),
             slug: slug('Test Post').toLowerCase(),
             blog_id: blog.id,
             member_id: member.id
